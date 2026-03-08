@@ -50,10 +50,19 @@ section:nth-child(even){background:var(--white)}
 
 /* ===== PHOTO GRID ===== */
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:48px}
-.photo-grid img{width:100%;height:280px;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow);transition:transform 0.3s}
+.photo-grid img{width:100%;height:280px;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow);transition:transform 0.3s;cursor:pointer}
 .photo-grid img:hover{transform:scale(1.02)}
 .photo-grid .photo-card{position:relative;overflow:hidden;border-radius:var(--r)}
-.photo-grid .photo-card .photo-label{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);color:var(--white);font-size:14px;font-weight:600}
+.photo-grid .photo-card .photo-label{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);color:var(--white);font-size:14px;font-weight:600;pointer-events:none}
+.photo-grid .photo-card.full-width{grid-column:1/-1}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lightbox.active{display:flex}
+.lightbox img{max-width:95vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,0.5)}
+.lightbox-close{position:absolute;top:20px;right:24px;color:white;font-size:36px;font-weight:300;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,0.1);transition:background 0.2s;z-index:10000;line-height:1}
+.lightbox-close:hover{background:rgba(255,255,255,0.25)}
+.lightbox-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.8);font-size:15px;font-weight:500;text-align:center;max-width:80vw}
 
 /* ===== FEATURE CARDS ===== */
 .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
@@ -116,22 +125,53 @@ section:nth-child(even){background:var(--white)}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .hero{height:70vh;min-height:480px}
-  .hero-content{padding:0 24px 40px}
-  .hero-price{top:16px;right:16px;padding:14px 20px}
-  .hero-price .amount{font-size:28px}
-  .hl-item{flex:1 1 50%;padding:20px 16px}
+  .hero{height:65vh;min-height:400px}
+  .hero-content{padding:0 20px 32px}
+  .hero-content h1{font-size:28px}
+  .hero-sub{font-size:15px}
+  .hero-price{top:12px;right:12px;padding:12px 16px;border-radius:12px}
+  .hero-price .amount{font-size:24px}
+  .hero-price .per{font-size:12px}
+  .hl-item{flex:1 1 50%;padding:18px 12px}
+  .hl-icon{font-size:22px}
+  .hl-value{font-size:14px}
+  .hl-label{font-size:10px}
   .location-grid{grid-template-columns:1fr}
   .details-grid{grid-template-columns:1fr}
-  .pool-callout{padding:32px 24px}
-  section{padding:48px 0}
+  .pool-callout{padding:28px 20px}
+  .pool-callout h3{font-size:22px}
+  .pool-callout p{font-size:15px}
+  section{padding:40px 0}
+  .container{padding:0 16px}
+  .section-title{font-size:24px}
+  .section-sub{font-size:15px;margin-bottom:28px}
+  .photo-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .photo-grid img{height:180px}
+  .photo-grid .photo-card .photo-label{font-size:11px;padding:8px 10px}
+  .features-grid{grid-template-columns:1fr;gap:12px}
+  .feature-card{padding:20px}
+  .feature-card .fc-icon{font-size:26px}
+  .feature-card h3{font-size:16px}
+  .feature-card p{font-size:13px}
+  .amenity-pill{font-size:13px;padding:8px 14px}
+  .detail-row{font-size:13px}
+  .expect-list{grid-template-columns:1fr;gap:8px}
+  .expect-list li{padding:12px 14px;font-size:13px}
+  .cta-section{padding:48px 0}
+  .cta-section h2{font-size:24px}
+  .cta-section p{font-size:15px}
+  .cta-btn{padding:14px 32px;font-size:16px}
 }
 @media(max-width:480px){
-  .hero{height:60vh}
-  .hero-price{position:relative;top:auto;right:auto;margin:16px 24px 0;display:inline-flex;gap:12px;align-items:center;padding:12px 20px}
-  .hero-price .amount{font-size:24px}
-  .hl-item{flex:1 1 100%}
-  .photo-grid{grid-template-columns:1fr}
+  .hero{height:55vh;min-height:340px}
+  .hero-price{position:relative;top:auto;right:auto;margin:12px 16px 0;display:inline-flex;gap:8px;align-items:center;padding:10px 16px}
+  .hero-price .amount{font-size:22px}
+  .hl-item{flex:1 1 100%;padding:14px 12px}
+  .photo-grid{grid-template-columns:1fr;gap:10px}
+  .photo-grid img{height:220px}
+  .photo-grid .photo-card.full-width img,.photo-grid .photo-card.full-width{min-height:auto;height:auto}
+  .photo-grid .photo-card.full-width svg{max-height:220px}
+  .section-title{font-size:22px}
 }
 </style>
 </head>
@@ -234,7 +274,7 @@ section:nth-child(even){background:var(--white)}
         <img src="listing_images/appraisal_p1_img44.jpeg" alt="Building front entrance with manicured hedges">
         <div class="photo-label">Beautifully Maintained Complex</div>
       </div>
-      <div class="photo-card" style="background:var(--g50);display:flex;align-items:center;justify-content:center;min-height:280px;padding:20px">
+      <div class="photo-card full-width" style="background:var(--g50);display:flex;align-items:center;justify-content:center;min-height:280px;padding:20px">
         <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:260px;font-family:-apple-system,sans-serif">
           <!-- Background -->
           <rect width="500" height="400" fill="#f0f4f0" rx="12"/>
@@ -564,6 +604,54 @@ section:nth-child(even){background:var(--white)}
 <div class="footer">
   Room for rent in a privately owned condo &bull; Not a property management listing &bull; Equal opportunity housing
 </div>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lightbox');
+  var lbImg=document.getElementById('lightbox-img');
+  var lbCap=document.getElementById('lightbox-caption');
+
+  document.querySelectorAll('.photo-grid .photo-card img, .hero-img').forEach(function(img){
+    img.style.cursor='pointer';
+    img.addEventListener('click',function(e){
+      e.stopPropagation();
+      lbImg.src=this.src;
+      var card=this.closest('.photo-card');
+      var label=card?card.querySelector('.photo-label'):null;
+      lbCap.textContent=label?label.textContent:(this.alt||'');
+      lb.classList.add('active');
+      document.body.style.overflow='hidden';
+    });
+  });
+
+  // Also make unit overview site plan clickable
+  document.querySelectorAll('section img[src*="appraisal_p1_img52"]').forEach(function(img){
+    img.style.cursor='pointer';
+    img.addEventListener('click',function(){
+      lbImg.src=this.src;
+      lbCap.textContent='Mission Ridge Phase III — Community Layout';
+      lb.classList.add('active');
+      document.body.style.overflow='hidden';
+    });
+  });
+
+  window.closeLightbox=function(){
+    lb.classList.remove('active');
+    document.body.style.overflow='';
+  };
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape')closeLightbox();
+  });
+})();
+</script>
 
 </body>
 </html>
