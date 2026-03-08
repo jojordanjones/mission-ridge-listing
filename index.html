@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Room for Rent — Mission Ridge, Mission Valley, San Diego</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a1a2e;--blue:#2563EB;--blue-dark:#1e40af;--teal:#0d9488;
+  --gold:#d4a857;--warm:#f8f5f0;--white:#fff;--black:#111;
+  --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
+  --g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;
+  --r:16px;--shadow:0 4px 24px rgba(0,0,0,0.08);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--g800);line-height:1.6;background:var(--warm)}
+
+/* ===== HERO ===== */
+.hero{position:relative;height:85vh;min-height:560px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.15) 50%,rgba(0,0,0,0.05) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 40px 60px;max-width:900px;color:var(--white)}
+.hero-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:6px 16px;border-radius:20px;margin-bottom:16px}
+.hero-content h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:12px;text-shadow:0 2px 20px rgba(0,0,0,0.3)}
+.hero-sub{font-size:clamp(16px,2.5vw,20px);opacity:0.9;font-weight:400;max-width:600px}
+.hero-price{position:absolute;top:32px;right:40px;z-index:3;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:var(--r);padding:20px 28px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+.hero-price .amount{font-size:36px;font-weight:800;color:var(--blue);letter-spacing:-1px}
+.hero-price .per{font-size:14px;color:var(--g500);font-weight:500}
+.hero-price .avail{font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-top:6px}
+
+/* ===== CONTAINER ===== */
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ===== HIGHLIGHTS BAR ===== */
+.highlights{background:var(--navy);color:var(--white);padding:0;overflow:hidden}
+.highlights-inner{display:flex;flex-wrap:wrap;justify-content:center;gap:0}
+.hl-item{flex:1 1 200px;padding:28px 24px;text-align:center;border-right:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;align-items:center;gap:6px}
+.hl-item:last-child{border-right:none}
+.hl-icon{font-size:28px;opacity:0.9}
+.hl-label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.5;font-weight:600}
+.hl-value{font-size:16px;font-weight:700;letter-spacing:-0.3px}
+
+/* ===== SECTIONS ===== */
+section{padding:64px 0}
+section:nth-child(even){background:var(--white)}
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--teal);margin-bottom:8px}
+.section-title{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-0.5px;color:var(--black);margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--g500);max-width:640px;margin-bottom:40px;line-height:1.7}
+
+/* ===== PHOTO GRID ===== */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:48px}
+.photo-grid img{width:100%;height:280px;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow);transition:transform 0.3s}
+.photo-grid img:hover{transform:scale(1.02)}
+.photo-grid .photo-card{position:relative;overflow:hidden;border-radius:var(--r)}
+.photo-grid .photo-card .photo-label{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);color:var(--white);font-size:14px;font-weight:600}
+
+/* ===== FEATURE CARDS ===== */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feature-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:28px;transition:box-shadow 0.2s,transform 0.2s}
+.feature-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.feature-card .fc-icon{font-size:32px;margin-bottom:12px}
+.feature-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--black)}
+.feature-card p{font-size:14px;color:var(--g600);line-height:1.7}
+
+/* ===== AMENITY PILLS ===== */
+.amenity-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.amenity-pill{background:var(--white);border:1.5px solid var(--g200);border-radius:40px;padding:10px 20px;font-size:14px;font-weight:600;color:var(--g700);display:flex;align-items:center;gap:8px;transition:all 0.15s}
+.amenity-pill:hover{border-color:var(--teal);color:var(--teal)}
+.amenity-pill .ap-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ap-dot.pool{background:#0ea5e9}
+.ap-dot.gym{background:#f59e0b}
+.ap-dot.unit{background:#8b5cf6}
+.ap-dot.area{background:#10b981}
+
+/* ===== POOL CALLOUT ===== */
+.pool-callout{background:linear-gradient(135deg,#0d9488 0%,#0ea5e9 100%);border-radius:var(--r);padding:48px;color:var(--white);text-align:center;margin:48px 0;position:relative;overflow:hidden}
+.pool-callout::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.08)}
+.pool-callout::after{content:'';position:absolute;bottom:-60px;left:-30px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.pool-callout h3{font-size:28px;font-weight:800;margin-bottom:8px;position:relative;z-index:1}
+.pool-callout p{font-size:17px;opacity:0.9;max-width:500px;margin:0 auto;position:relative;z-index:1;line-height:1.7}
+
+/* ===== LOCATION ===== */
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.loc-list{list-style:none}
+.loc-list li{padding:12px 0;border-bottom:1px solid var(--g100);font-size:15px;color:var(--g700);display:flex;align-items:center;gap:12px}
+.loc-list li:last-child{border-bottom:none}
+.loc-list .loc-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0}
+.loc-list .loc-dist{margin-left:auto;font-size:13px;font-weight:600;color:var(--g500);white-space:nowrap}
+.loc-map{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.loc-map img{width:100%;display:block}
+
+/* ===== DETAILS TABLE ===== */
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.detail-group h3{font-size:16px;font-weight:700;color:var(--black);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--teal)}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100);font-size:14px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .dl{color:var(--g500)}
+.detail-row .dv{font-weight:600;color:var(--g800)}
+
+/* ===== ROOMMATE EXPECTATIONS ===== */
+.expect-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.expect-list li{background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:16px 20px;font-size:14px;color:var(--g700);display:flex;align-items:flex-start;gap:12px;line-height:1.6}
+.expect-list .check{width:24px;height:24px;border-radius:50%;background:var(--teal);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;margin-top:1px}
+
+/* ===== CTA ===== */
+.cta-section{background:var(--navy);color:var(--white);padding:80px 0;text-align:center}
+.cta-section h2{font-size:clamp(28px,5vw,40px);font-weight:800;margin-bottom:12px;letter-spacing:-0.5px}
+.cta-section p{font-size:18px;opacity:0.7;margin-bottom:32px}
+.cta-btn{display:inline-block;background:var(--teal);color:var(--white);padding:16px 40px;border-radius:var(--r);font-size:18px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.cta-btn:hover{background:#0f766e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,148,136,0.3)}
+.cta-contact{margin-top:20px;font-size:14px;opacity:0.5}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:24px;font-size:12px;color:var(--g500);background:var(--g50);border-top:1px solid var(--g200)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .hero{height:70vh;min-height:480px}
+  .hero-content{padding:0 24px 40px}
+  .hero-price{top:16px;right:16px;padding:14px 20px}
+  .hero-price .amount{font-size:28px}
+  .hl-item{flex:1 1 50%;padding:20px 16px}
+  .location-grid{grid-template-columns:1fr}
+  .details-grid{grid-template-columns:1fr}
+  .pool-callout{padding:32px 24px}
+  section{padding:48px 0}
+}
+@media(max-width:480px){
+  .hero{height:60vh}
+  .hero-price{position:relative;top:auto;right:auto;margin:16px 24px 0;display:inline-flex;gap:12px;align-items:center;padding:12px 20px}
+  .hero-price .amount{font-size:24px}
+  .hl-item{flex:1 1 100%}
+  .photo-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================== -->
+<!-- HERO                           -->
+<!-- ============================== -->
+<div class="hero">
+  <img class="hero-img" src="listing_images/spare bedroom 2.png" alt="Bright, sunlit private bedroom with LVP flooring, mirrored closet, ceiling fan, and garden view">
+  <div class="hero-overlay"></div>
+  <div class="hero-price">
+    <div class="amount">$2,000</div>
+    <div class="per">per month</div>
+    <div class="avail">Available Now</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Private Room + Private Bath</div>
+    <h1>Your Own Space in<br>Mission Valley</h1>
+    <p class="hero-sub">Private bedroom &amp; full bathroom in a beautifully updated 2-bed condo at Mission Ridge &mdash; steps from the pool, hot tub &amp; sauna.</p>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- HIGHLIGHTS BAR                 -->
+<!-- ============================== -->
+<div class="highlights">
+  <div class="highlights-inner">
+    <div class="hl-item">
+      <div class="hl-icon">&#127969;</div>
+      <div class="hl-label">Your Room</div>
+      <div class="hl-value">Private 10'&times;12' Bedroom</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon">&#128707;</div>
+      <div class="hl-label">Your Bathroom</div>
+      <div class="hl-value">Private Full Bath</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon">&#127946;</div>
+      <div class="hl-label">Steps Away</div>
+      <div class="hl-value">Pool &bull; Hot Tub &bull; Sauna</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon">&#128663;</div>
+      <div class="hl-label">Parking</div>
+      <div class="hl-value">Free Guest Parking</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-icon">&#128197;</div>
+      <div class="hl-label">Lease</div>
+      <div class="hl-value">6-Month Minimum</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- PHOTO GALLERY                  -->
+<!-- ============================== -->
+<section>
+  <div class="container">
+    <div class="section-label">Gallery</div>
+    <div class="section-title">See the Space</div>
+    <div class="section-sub">A recently updated condo with modern finishes throughout. Granite counters, stainless steel appliances, new LVP flooring, and resort-style amenities right outside your door.</div>
+
+    <div class="photo-grid">
+      <div class="photo-card">
+        <img src="listing_images/spare bedroom 2.png" alt="Your bedroom — bright, clean, natural light, LVP flooring, mirrored closet, ceiling fan, garden view" style="height:340px">
+        <div class="photo-label">Your Bedroom &mdash; Bright, Clean &amp; Move-In Ready</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/spare bedroom_edited.png" alt="Bedroom furnished with neatly made bed, desk area, ceiling fan, and clean decor" style="height:340px">
+        <div class="photo-label">Furnished &mdash; Plenty of Room for Your Setup</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/bathroom_edited.png" alt="Your private bathroom with granite vanity, glass-enclosed tub/shower, and modern fixtures" style="height:340px">
+        <div class="photo-label">Your Private Bathroom &mdash; Granite Vanity &amp; Glass Shower</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/kitchen_edited.png" alt="Updated kitchen with granite countertops, stainless steel appliances, and white shaker cabinets">
+        <div class="photo-label">Renovated Kitchen &mdash; Granite &amp; Stainless Steel</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/entry from hall.png" alt="Interior hallway entry to the unit">
+        <div class="photo-label">Building Interior &mdash; Clean &amp; Well-Maintained</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/appraisal_p1_img28.jpeg" alt="Private patio with lush green tree views">
+        <div class="photo-label">Private Patio with Green Views</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/appraisal_p1_img17.jpeg" alt="Mission Ridge building exterior with mature trees and landscaping">
+        <div class="photo-label">Mission Ridge &mdash; Your Building</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/appraisal_p1_img15.jpeg" alt="Tree-lined community with covered parking and walkways">
+        <div class="photo-label">Tree-Lined Grounds &amp; Covered Parking</div>
+      </div>
+      <div class="photo-card">
+        <img src="listing_images/appraisal_p1_img44.jpeg" alt="Building front entrance with manicured hedges">
+        <div class="photo-label">Beautifully Maintained Complex</div>
+      </div>
+      <div class="photo-card" style="background:var(--g50);display:flex;align-items:center;justify-content:center;min-height:280px;padding:20px">
+        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:260px;font-family:-apple-system,sans-serif">
+          <!-- Background -->
+          <rect width="500" height="400" fill="#f0f4f0" rx="12"/>
+          <!-- I-15 -->
+          <path d="M80,0 L80,400" stroke="#9ca3af" stroke-width="18" fill="none" opacity="0.3"/>
+          <path d="M80,0 L80,400" stroke="#d1d5db" stroke-width="2" stroke-dasharray="8,8" fill="none"/>
+          <text x="68" y="30" font-size="10" fill="#6b7280" font-weight="700">I-15</text>
+          <!-- I-8 -->
+          <path d="M0,120 Q200,100 500,130" stroke="#9ca3af" stroke-width="18" fill="none" opacity="0.3"/>
+          <path d="M0,120 Q200,100 500,130" stroke="#d1d5db" stroke-width="2" stroke-dasharray="8,8" fill="none"/>
+          <text x="440" y="118" font-size="10" fill="#6b7280" font-weight="700">I-8</text>
+          <!-- Friars Rd -->
+          <path d="M0,80 L500,65" stroke="#e5e7eb" stroke-width="6" fill="none"/>
+          <text x="400" y="58" font-size="9" fill="#9ca3af" font-weight="600">Friars Rd</text>
+          <!-- Rancho Mission Rd -->
+          <path d="M300,140 L420,400" stroke="#e5e7eb" stroke-width="6" fill="none"/>
+          <text x="370" y="300" font-size="9" fill="#9ca3af" font-weight="600" transform="rotate(68,370,300)">Rancho Mission Rd</text>
+          <!-- Caminito Cuervo -->
+          <path d="M140,150 Q200,180 280,210 Q320,230 300,280" stroke="#e5e7eb" stroke-width="5" fill="none"/>
+          <text x="145" y="145" font-size="9" fill="#9ca3af" font-weight="600">Caminito Cuervo</text>
+          <!-- Mission Ridge complex -->
+          <rect x="180" y="185" width="90" height="65" fill="#0d9488" opacity="0.15" rx="8"/>
+          <rect x="180" y="185" width="90" height="65" fill="none" stroke="#0d9488" stroke-width="2" rx="8"/>
+          <!-- Pin -->
+          <circle cx="225" cy="210" r="14" fill="#0d9488"/>
+          <circle cx="225" cy="210" r="6" fill="white"/>
+          <path d="M225,224 L225,240" stroke="#0d9488" stroke-width="2"/>
+          <text x="225" y="260" font-size="11" fill="#0d9488" font-weight="800" text-anchor="middle">MISSION RIDGE</text>
+          <text x="225" y="273" font-size="8" fill="#6b7280" font-weight="600" text-anchor="middle">Caminito Cuervo, San Diego 92108</text>
+          <!-- Pool icon near complex -->
+          <circle cx="285" cy="200" r="10" fill="#0ea5e9" opacity="0.3"/>
+          <text x="285" y="204" font-size="8" fill="#0ea5e9" font-weight="700" text-anchor="middle">Pool</text>
+          <!-- SDSU -->
+          <rect x="310" y="50" width="70" height="28" fill="#2563EB" opacity="0.1" rx="6"/>
+          <text x="345" y="68" font-size="9" fill="#2563EB" font-weight="700" text-anchor="middle">SDSU</text>
+          <!-- Fashion Valley -->
+          <rect x="110" y="45" width="80" height="24" fill="#7c3aed" opacity="0.1" rx="6"/>
+          <text x="150" y="61" font-size="8" fill="#7c3aed" font-weight="700" text-anchor="middle">Fashion Valley</text>
+          <!-- Snapdragon -->
+          <rect x="200" y="290" width="80" height="24" fill="#f59e0b" opacity="0.15" rx="6"/>
+          <text x="240" y="306" font-size="8" fill="#d97706" font-weight="700" text-anchor="middle">Snapdragon Stadium</text>
+          <!-- Trolley -->
+          <circle cx="160" cy="320" r="4" fill="#10b981"/>
+          <text x="170" y="324" font-size="8" fill="#10b981" font-weight="600">Green Line Trolley</text>
+          <!-- USD -->
+          <rect x="380" y="180" width="55" height="24" fill="#2563EB" opacity="0.1" rx="6"/>
+          <text x="407" y="196" font-size="9" fill="#2563EB" font-weight="700" text-anchor="middle">USD</text>
+          <!-- Distance lines -->
+          <line x1="270" y1="210" x2="345" y2="64" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <text x="320" y="140" font-size="8" fill="#2563EB" font-weight="600">10 min</text>
+          <line x1="270" y1="215" x2="407" y2="180" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <text x="350" y="210" font-size="8" fill="#2563EB" font-weight="600">10 min</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- POOL CALLOUT                   -->
+<!-- ============================== -->
+<div class="container">
+  <div class="pool-callout">
+    <h3>Right Across from the Pool, Hot Tub &amp; Sauna</h3>
+    <p>This unit sits directly across from Mission Ridge's resort-style pool and spa area. Step outside and you're there &mdash; no long walks, no hassle. It's like living at a resort, every single day.</p>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- WHAT YOU GET                   -->
+<!-- ============================== -->
+<section style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">What's Included</div>
+    <div class="section-title">Everything You Need</div>
+    <div class="section-sub">This isn't a cramped room in someone's house. It's a real condo with real space, modern upgrades, and a private suite that's all yours.</div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="fc-icon">&#128716;</div>
+        <h3>Your Private Bedroom</h3>
+        <p>Spacious 10'&times;12' room with natural light, ceiling fan, walk-in closet, modern LVP flooring, and fresh neutral paint. Bring your furniture and make it yours.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">&#128704;</div>
+        <h3>Your Private Bathroom</h3>
+        <p>Full hall bathroom that's exclusively yours &mdash; not shared. Updated vanity, tub/shower combo, modern tile, and plenty of counter space.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">&#127859;</div>
+        <h3>Renovated Kitchen</h3>
+        <p>Granite countertops, full tile backsplash, white shaker cabinets, stainless steel fridge, range, microwave, dishwasher, and garbage disposal.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">&#128293;</div>
+        <h3>Living Room + Fireplace</h3>
+        <p>Open 25'&times;15' living area with a gas fireplace and sliding doors to a private balcony surrounded by mature trees &mdash; peaceful and green.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">&#129529;</div>
+        <h3>In-Unit Washer &amp; Dryer</h3>
+        <p>No trips to the laundromat. Stackable washer and dryer right inside the unit plus additional community laundry onsite.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">&#10052;&#65039;</div>
+        <h3>Central A/C &amp; Heat</h3>
+        <p>Full central air conditioning and forced-air heating. Stay comfortable year-round in San Diego's perfect weather.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- COMMUNITY AMENITIES            -->
+<!-- ============================== -->
+<section>
+  <div class="container">
+    <div class="section-label">Community</div>
+    <div class="section-title">Mission Ridge Has It All</div>
+    <div class="section-sub">A quiet, peaceful gated community with mature trees and resort-caliber amenities. This isn't a loud apartment complex &mdash; it's a calm, well-maintained neighborhood where you can actually relax. All amenities included with your rent.</div>
+
+    <div class="amenity-grid">
+      <div class="amenity-pill"><span class="ap-dot pool"></span>Resort-Style Pool</div>
+      <div class="amenity-pill"><span class="ap-dot pool"></span>Hot Tub / Spa</div>
+      <div class="amenity-pill"><span class="ap-dot pool"></span>Sauna</div>
+      <div class="amenity-pill"><span class="ap-dot gym"></span>Fitness / Exercise Room</div>
+      <div class="amenity-pill"><span class="ap-dot area"></span>BBQ &amp; Picnic Area</div>
+      <div class="amenity-pill"><span class="ap-dot area"></span>Clubhouse / Rec Room</div>
+      <div class="amenity-pill"><span class="ap-dot area"></span>Recreation Area</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>In-Unit Washer &amp; Dryer</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Community Laundry</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Plenty of Guest Parking</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Covered Spot Available (add'l cost)</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Internet Included</div>
+      <div class="amenity-pill"><span class="ap-dot area"></span>Gated / Secure Complex</div>
+      <div class="amenity-pill"><span class="ap-dot area"></span>Lush Landscaped Grounds</div>
+      <div class="amenity-pill"><span class="ap-dot area"></span>Quiet &amp; Peaceful Community</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Cat-Friendly</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Gas Fireplace</div>
+      <div class="amenity-pill"><span class="ap-dot unit"></span>Private Balcony / Patio</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- LOCATION                       -->
+<!-- ============================== -->
+<section style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">Location</div>
+    <div class="section-title">Mission Valley, San Diego</div>
+    <div class="section-sub">A quiet, tree-lined neighborhood that's still centrally connected to everything. Perfect for students &mdash; SDSU, USD, and UCSD are all an easy commute. Freeways, trolley, shopping, dining, and beaches are minutes away.</div>
+
+    <div class="location-grid">
+      <div>
+        <h3 style="font-size:14px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Nearby Schools</h3>
+        <ul class="loc-list">
+          <li>
+            <span class="loc-icon">&#127891;</span>
+            <span>San Diego State University (SDSU)</span>
+            <span class="loc-dist">10 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#127891;</span>
+            <span>SDSU Mission Valley Campus</span>
+            <span class="loc-dist">3 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#127891;</span>
+            <span>University of San Diego (USD)</span>
+            <span class="loc-dist">10 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#127891;</span>
+            <span>UC San Diego (UCSD)</span>
+            <span class="loc-dist">20 min</span>
+          </li>
+        </ul>
+        <h3 style="font-size:14px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin:20px 0 12px">Everything Else</h3>
+        <ul class="loc-list">
+          <li>
+            <span class="loc-icon">&#127963;</span>
+            <span>Snapdragon Stadium</span>
+            <span class="loc-dist">2 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#128717;</span>
+            <span>Fashion Valley Mall</span>
+            <span class="loc-dist">5 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#128645;</span>
+            <span>Green Line Trolley</span>
+            <span class="loc-dist">5 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#127754;</span>
+            <span>Mission Beach &amp; Pacific Beach</span>
+            <span class="loc-dist">15 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#127751;</span>
+            <span>Gaslamp Quarter Downtown</span>
+            <span class="loc-dist">10 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#128739;</span>
+            <span>I-8 &amp; I-15 Interchange</span>
+            <span class="loc-dist">1 min</span>
+          </li>
+          <li>
+            <span class="loc-icon">&#128664;</span>
+            <span>24 Hour Fitness</span>
+            <span class="loc-dist">2 min</span>
+          </li>
+        </ul>
+      </div>
+      <div class="loc-map">
+        <img src="listing_images/appraisal_p1_img50.jpeg" alt="Neighborhood map showing Mission Ridge location in Mission Valley">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- LEASE DETAILS                  -->
+<!-- ============================== -->
+<section>
+  <div class="container">
+    <div class="section-label">Details</div>
+    <div class="section-title">Lease &amp; Move-In Info</div>
+
+    <div class="details-grid">
+      <div class="detail-group">
+        <h3>Rent &amp; Lease</h3>
+        <div class="detail-row"><span class="dl">Monthly Rent</span><span class="dv">$2,000</span></div>
+        <div class="detail-row"><span class="dl">Security Deposit</span><span class="dv">$2,000</span></div>
+        <div class="detail-row"><span class="dl">Minimum Lease</span><span class="dv">6 months</span></div>
+        <div class="detail-row"><span class="dl">Available</span><span class="dv" style="color:var(--teal)">Immediately</span></div>
+        <div class="detail-row"><span class="dl">Due Date</span><span class="dv">5th of each month</span></div>
+      </div>
+      <div class="detail-group">
+        <h3>Utilities &amp; Parking</h3>
+        <div class="detail-row"><span class="dl">Internet</span><span class="dv" style="color:var(--teal)">Included</span></div>
+        <div class="detail-row"><span class="dl">Electric / Power</span><span class="dv">Split 50/50</span></div>
+        <div class="detail-row"><span class="dl">Water</span><span class="dv">Split 50/50</span></div>
+        <div class="detail-row"><span class="dl">Sewer / Trash</span><span class="dv" style="color:var(--teal)">Included (HOA)</span></div>
+        <div class="detail-row"><span class="dl">Guest Parking</span><span class="dv" style="color:var(--teal)">Plenty available (free)</span></div>
+        <div class="detail-row"><span class="dl">Covered Spot</span><span class="dv">Available for additional cost</span></div>
+        <div class="detail-row"><span class="dl">Cat-Friendly</span><span class="dv" style="color:var(--teal)">Yes (resident cat on-site)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- ROOMMATE FIT                   -->
+<!-- ============================== -->
+<section style="background:var(--white)">
+  <div class="container">
+    <div class="section-label">Good Fit?</div>
+    <div class="section-title">About You &amp; Your Roommate</div>
+    <div class="section-sub">You'd be sharing the condo with a friendly, laid-back woman in her late twenties who works full-time and has a sweet cat. The vibe is quiet, clean, and respectful &mdash; two people living their own lives in a comfortable shared space. Ideal for a female student or working professional around 25&ndash;35.</div>
+
+    <ul class="expect-list">
+      <li><span class="check">&#10003;</span>Female &mdash; student, grad student, or working professional</li>
+      <li><span class="check">&#10003;</span>Clean, respectful, and communicative</li>
+      <li><span class="check">&#10003;</span>Must be OK with a cat (friendly resident kitty!)</li>
+      <li><span class="check">&#10003;</span>Non-smoker</li>
+      <li><span class="check">&#10003;</span>Quiet, chill lifestyle &mdash; not a party house</li>
+      <li><span class="check">&#10003;</span>Financially stable (verifiable income)</li>
+      <li><span class="check">&#10003;</span>Background &amp; credit check required</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- UNIT OVERVIEW                  -->
+<!-- ============================== -->
+<section>
+  <div class="container">
+    <div class="section-label">The Unit</div>
+    <div class="section-title">2-Bed / 2-Bath Condo &mdash; 1,167 sq ft</div>
+    <div class="section-sub">A real condo in a well-established community, not an apartment complex. Built in 1978 and recently updated with modern finishes.</div>
+
+    <div class="details-grid">
+      <div class="detail-group">
+        <h3>Room Sizes</h3>
+        <div class="detail-row"><span class="dl">Living Room</span><span class="dv">25' &times; 15'</span></div>
+        <div class="detail-row"><span class="dl">Primary Bedroom</span><span class="dv">18' &times; 12'</span></div>
+        <div class="detail-row"><span class="dl">Your Bedroom (#2)</span><span class="dv">10' &times; 12'</span></div>
+        <div class="detail-row"><span class="dl">Kitchen</span><span class="dv">12' &times; 8'</span></div>
+        <div class="detail-row"><span class="dl">Total Unit</span><span class="dv">1,167 sq ft</span></div>
+      </div>
+      <div class="detail-group">
+        <h3>Unit Features</h3>
+        <div class="detail-row"><span class="dl">Floor</span><span class="dv">First floor (no stairs)</span></div>
+        <div class="detail-row"><span class="dl">Flooring</span><span class="dv">LVP throughout</span></div>
+        <div class="detail-row"><span class="dl">Cooling</span><span class="dv">Central A/C</span></div>
+        <div class="detail-row"><span class="dl">Heat</span><span class="dv">Central forced air</span></div>
+        <div class="detail-row"><span class="dl">Fireplace</span><span class="dv">Gas, in living room</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:40px">
+      <img src="listing_images/appraisal_p1_img52.jpeg" alt="Site plan showing unit location within Mission Ridge" style="max-width:100%;border-radius:var(--r);box-shadow:var(--shadow)">
+      <p style="font-size:13px;color:var(--g500);margin-top:12px">Mission Ridge Phase III &mdash; Community Layout</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- CTA                            -->
+<!-- ============================== -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Ready to See It?</h2>
+    <p>Reach out to schedule a tour. Serious inquiries only &mdash; this one won't last long.</p>
+    <a href="sms:&body=Hi!%20I'm%20interested%20in%20the%20room%20for%20rent%20at%20Mission%20Ridge%20in%20Mission%20Valley.%20Is%20it%20still%20available?" class="cta-btn">Send a Message</a>
+    <div class="cta-contact">Mission Ridge &bull; Caminito Cuervo &bull; Mission Valley, San Diego 92108</div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- FOOTER                         -->
+<!-- ============================== -->
+<div class="footer">
+  Room for rent in a privately owned condo &bull; Not a property management listing &bull; Equal opportunity housing
+</div>
+
+</body>
+</html>
