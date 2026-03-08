@@ -13,13 +13,13 @@
   --g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;
   --r:12px;--shadow:0 2px 12px rgba(0,0,0,0.07);
 }
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--g800);line-height:1.55;background:var(--warm)}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--g800);line-height:1.55;background:var(--warm);overflow-x:hidden}
 
 /* ===== HERO ===== */
 .hero{position:relative;height:60vh;min-height:380px;max-height:520px;overflow:hidden;display:flex;align-items:flex-end}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.1) 55%,rgba(0,0,0,0.03) 100%)}
+.hero-img{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;will-change:transform}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.74) 0%,rgba(0,0,0,0.1) 55%,rgba(0,0,0,0.03) 100%)}
 .hero-content{position:relative;z-index:2;padding:0 28px 32px;max-width:800px;color:var(--white)}
 .hero-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;padding:5px 12px;border-radius:16px;margin-bottom:10px}
 .hero-content h1{font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.1;letter-spacing:-0.5px;margin-bottom:8px;text-shadow:0 2px 16px rgba(0,0,0,0.3)}
@@ -34,6 +34,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:va
 
 /* ===== HIGHLIGHTS BAR ===== */
 .highlights{background:var(--navy);color:var(--white);padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.highlights::-webkit-scrollbar{display:none}
 .highlights-inner{display:flex;min-width:max-content}
 .hl-item{flex:0 0 auto;padding:14px 20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;gap:2px}
 .hl-item:last-child{border-right:none}
@@ -50,17 +51,20 @@ section:nth-child(even){background:var(--white)}
 
 /* ===== PHOTO GRID ===== */
 .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.photo-grid img{width:100%;height:200px;object-fit:cover;border-radius:8px;box-shadow:var(--shadow);cursor:pointer;transition:transform 0.2s;-webkit-tap-highlight-color:transparent}
-.photo-grid img:hover{transform:scale(1.015)}
 .photo-grid .photo-card{position:relative;overflow:hidden;border-radius:8px}
-.photo-grid .photo-card .photo-label{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);color:var(--white);font-size:11px;font-weight:600;pointer-events:none}
+.photo-grid img{width:100%;height:200px;object-fit:cover;border-radius:8px;box-shadow:var(--shadow);cursor:pointer;transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94),box-shadow 0.4s ease;-webkit-tap-highlight-color:transparent}
+.photo-grid img:hover{transform:scale(1.03);box-shadow:0 6px 24px rgba(0,0,0,0.15)}
+.photo-grid .photo-card .photo-label{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);color:var(--white);font-size:11px;font-weight:600;pointer-events:none;transform:translateY(100%);transition:transform 0.3s ease}
+.photo-grid .photo-card:hover .photo-label{transform:translateY(0)}
 
 /* ===== LIGHTBOX ===== */
-.lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
-.lightbox.active{display:flex}
-.lightbox img{max-width:96vw;max-height:88vh;object-fit:contain;border-radius:6px}
-.lightbox-close{position:absolute;top:12px;right:16px;color:white;font-size:32px;font-weight:300;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,0.1);z-index:10000;line-height:1}
-.lightbox-caption{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;text-align:center;max-width:85vw}
+.lightbox{position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px;cursor:zoom-out;display:flex;visibility:hidden;opacity:0}
+.lightbox.active{visibility:visible;opacity:1}
+.lightbox-bg{position:absolute;inset:0;background:rgba(0,0,0,0.93)}
+.lightbox img{max-width:96vw;max-height:88vh;object-fit:contain;border-radius:6px;position:relative;z-index:1}
+.lightbox-close{position:absolute;top:12px;right:16px;color:white;font-size:32px;font-weight:300;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,0.1);z-index:10000;line-height:1;transition:background 0.2s}
+.lightbox-close:hover{background:rgba(255,255,255,0.25)}
+.lightbox-caption{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;text-align:center;max-width:85vw;z-index:1}
 
 /* ===== POOL CALLOUT ===== */
 .pool-callout{background:linear-gradient(135deg,#0d9488 0%,#0ea5e9 100%);border-radius:var(--r);padding:28px 24px;color:var(--white);text-align:center;margin:24px 0;position:relative;overflow:hidden}
@@ -70,16 +74,19 @@ section:nth-child(even){background:var(--white)}
 
 /* ===== FEATURE CARDS ===== */
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.feature-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:16px;transition:box-shadow 0.2s}
-.feature-card:hover{box-shadow:var(--shadow)}
-.feature-card .fc-icon{font-size:24px;margin-bottom:6px}
+.feature-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:16px;transition:box-shadow 0.3s ease,transform 0.3s ease,border-color 0.3s ease}
+.feature-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.08);transform:translateY(-2px);border-color:var(--teal)}
+.feature-card .fc-icon{font-size:24px;margin-bottom:6px;transition:transform 0.3s ease}
+.feature-card:hover .fc-icon{transform:scale(1.15)}
 .feature-card h3{font-size:14px;font-weight:700;margin-bottom:3px;color:var(--black)}
 .feature-card p{font-size:12px;color:var(--g600);line-height:1.55}
 
 /* ===== AMENITY PILLS ===== */
 .amenity-grid{display:flex;flex-wrap:wrap;gap:6px}
-.amenity-pill{background:var(--white);border:1px solid var(--g200);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--g700);display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent}
-.amenity-pill .ap-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.amenity-pill{background:var(--white);border:1px solid var(--g200);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--g700);display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent;transition:all 0.2s ease}
+.amenity-pill:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-1px)}
+.amenity-pill .ap-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:transform 0.2s ease}
+.amenity-pill:hover .ap-dot{transform:scale(1.5)}
 .ap-dot.pool{background:#0ea5e9}
 .ap-dot.gym{background:#f59e0b}
 .ap-dot.unit{background:#8b5cf6}
@@ -87,23 +94,28 @@ section:nth-child(even){background:var(--white)}
 
 /* ===== LOCATION ===== */
 .loc-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0}
-.loc-list li{padding:8px 0;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g700);display:flex;align-items:center;gap:8px}
+.loc-list li{padding:8px 0;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g700);display:flex;align-items:center;gap:8px;transition:padding-left 0.2s ease}
+.loc-list li:hover{padding-left:4px}
 .loc-list li:last-child{border-bottom:none}
 .loc-list .loc-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0}
-.loc-list .loc-dist{margin-left:auto;font-size:11px;font-weight:600;color:var(--g500);white-space:nowrap}
+.loc-list .loc-dist{margin-left:auto;font-size:11px;font-weight:600;color:var(--g500);white-space:nowrap;background:var(--g100);padding:2px 8px;border-radius:10px;transition:background 0.2s,color 0.2s}
+.loc-list li:hover .loc-dist{background:var(--teal);color:var(--white)}
 
 /* ===== DETAILS TABLE ===== */
 .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .detail-group h3{font-size:13px;font-weight:700;color:var(--black);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--teal)}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px;transition:background 0.15s}
+.detail-row:hover{background:var(--g50)}
 .detail-row:last-child{border-bottom:none}
 .detail-row .dl{color:var(--g500)}
 .detail-row .dv{font-weight:600;color:var(--g800)}
 
 /* ===== ROOMMATE EXPECTATIONS ===== */
 .expect-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px}
-.expect-list li{background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--g700);display:flex;align-items:center;gap:8px;line-height:1.4}
-.expect-list .check{width:20px;height:20px;border-radius:50%;background:var(--teal);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700}
+.expect-list li{background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--g700);display:flex;align-items:center;gap:8px;line-height:1.4;transition:border-color 0.2s}
+.expect-list li:hover{border-color:var(--teal)}
+.expect-list .check{width:20px;height:20px;border-radius:50%;background:var(--teal);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;transition:transform 0.2s ease}
+.expect-list li:hover .check{transform:scale(1.15)}
 
 /* ===== MAP SECTION ===== */
 .map-section{background:var(--white);padding:36px 0 24px}
@@ -113,12 +125,16 @@ section:nth-child(even){background:var(--white)}
 .cta-section{background:var(--navy);color:var(--white);padding:40px 0;text-align:center}
 .cta-section h2{font-size:clamp(22px,4vw,32px);font-weight:800;margin-bottom:8px;letter-spacing:-0.3px}
 .cta-section p{font-size:15px;opacity:0.7;margin-bottom:20px}
-.cta-btn{display:inline-block;background:var(--teal);color:var(--white);padding:14px 36px;border-radius:var(--r);font-size:16px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.cta-btn:hover{background:#0f766e;transform:translateY(-1px)}
+.cta-btn{display:inline-block;background:var(--teal);color:var(--white);padding:14px 36px;border-radius:var(--r);font-size:16px;font-weight:700;text-decoration:none;transition:all 0.25s cubic-bezier(0.25,0.46,0.45,0.94);border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden}
+.cta-btn:hover{background:#0f766e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,148,136,0.3)}
+.cta-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(13,148,136,0.2)}
 .cta-contact{margin-top:12px;font-size:12px;opacity:0.5}
 
 /* ===== FOOTER ===== */
 .footer{text-align:center;padding:16px;font-size:11px;color:var(--g500);background:var(--g50);border-top:1px solid var(--g200)}
+
+/* ===== SCROLL REVEAL (pre-hide for GSAP) ===== */
+.reveal{visibility:hidden}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
@@ -168,6 +184,10 @@ section:nth-child(even){background:var(--white)}
   .hl-value{font-size:12px}
   .hl-label{font-size:8px}
 }
+@media(prefers-reduced-motion:reduce){
+  .reveal{visibility:visible!important}
+  *{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
+}
 </style>
 </head>
 <body>
@@ -176,15 +196,15 @@ section:nth-child(even){background:var(--white)}
 <div class="hero">
   <img class="hero-img" src="listing_images/spare bedroom 2.png" alt="Bright, sunlit private bedroom with LVP flooring, mirrored closet, ceiling fan, and garden view">
   <div class="hero-overlay"></div>
-  <div class="hero-price">
+  <div class="hero-price reveal">
     <div class="amount">$2,000</div>
     <div class="per">per month</div>
     <div class="avail">Available Now</div>
   </div>
   <div class="hero-content">
-    <div class="hero-badge">Private Room + Private Bath</div>
-    <h1>Your Own Space in<br>Mission Valley</h1>
-    <p class="hero-sub">Private bedroom &amp; full bathroom in a beautifully updated 2-bed condo at Mission Ridge &mdash; steps from the pool, hot tub &amp; sauna.</p>
+    <div class="hero-badge reveal">Private Room + Private Bath</div>
+    <h1 class="reveal">Your Own Space in<br>Mission Valley</h1>
+    <p class="hero-sub reveal">Private bedroom &amp; full bathroom in a beautifully updated 2-bed condo at Mission Ridge &mdash; steps from the pool, hot tub &amp; sauna.</p>
   </div>
 </div>
 
@@ -222,43 +242,43 @@ section:nth-child(even){background:var(--white)}
 <!-- PHOTO GALLERY -->
 <section>
   <div class="container">
-    <div class="section-label">Gallery</div>
-    <div class="section-title">See the Space</div>
+    <div class="section-label reveal">Gallery</div>
+    <div class="section-title reveal">See the Space</div>
 
     <div class="photo-grid">
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/spare bedroom 2.png" alt="Your bedroom — bright, clean, natural light, LVP flooring, mirrored closet, ceiling fan">
         <div class="photo-label">Your Bedroom &mdash; Move-In Ready</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/spare bedroom_edited.png" alt="Bedroom furnished with bed, desk area, ceiling fan">
         <div class="photo-label">Furnished Example</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/bathroom_edited.png" alt="Private bathroom with granite vanity and glass shower">
         <div class="photo-label">Your Private Bathroom</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/kitchen_edited.png" alt="Updated kitchen with granite countertops and stainless steel">
         <div class="photo-label">Renovated Kitchen</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/entry from hall.png" alt="Interior hallway entry">
         <div class="photo-label">Building Interior</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/appraisal_p1_img28.jpeg" alt="Private patio with green views">
         <div class="photo-label">Private Patio</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/appraisal_p1_img17.jpeg" alt="Mission Ridge building exterior">
         <div class="photo-label">Your Building</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/appraisal_p1_img15.jpeg" alt="Tree-lined grounds and parking">
         <div class="photo-label">Community Grounds</div>
       </div>
-      <div class="photo-card">
+      <div class="photo-card reveal">
         <img src="listing_images/appraisal_p1_img44.jpeg" alt="Building front with landscaping">
         <div class="photo-label">Complex Entrance</div>
       </div>
@@ -268,7 +288,7 @@ section:nth-child(even){background:var(--white)}
 
 <!-- POOL CALLOUT -->
 <div class="container">
-  <div class="pool-callout">
+  <div class="pool-callout reveal">
     <h3>Right Across from the Pool, Hot Tub &amp; Sauna</h3>
     <p>This unit sits directly across from Mission Ridge's resort-style pool and spa. Step outside and you're there &mdash; it's like living at a resort.</p>
   </div>
@@ -277,36 +297,36 @@ section:nth-child(even){background:var(--white)}
 <!-- WHAT YOU GET -->
 <section style="background:var(--white)">
   <div class="container">
-    <div class="section-label">What's Included</div>
-    <div class="section-title">Everything You Need</div>
+    <div class="section-label reveal">What's Included</div>
+    <div class="section-title reveal">Everything You Need</div>
 
     <div class="features-grid">
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <div class="fc-icon">&#128716;</div>
         <h3>Private Bedroom</h3>
         <p>10'&times;12' with natural light, ceiling fan, walk-in closet, LVP flooring, fresh paint.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <div class="fc-icon">&#128704;</div>
         <h3>Private Bathroom</h3>
         <p>Full bath that's exclusively yours. Updated vanity, tub/shower combo, modern tile.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <div class="fc-icon">&#127859;</div>
         <h3>Renovated Kitchen</h3>
         <p>Granite counters, tile backsplash, shaker cabinets, stainless appliances, dishwasher.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <div class="fc-icon">&#128293;</div>
         <h3>Living Room + Fireplace</h3>
         <p>25'&times;15' living area with gas fireplace and private balcony with tree views.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <div class="fc-icon">&#129529;</div>
         <h3>In-Unit W/D</h3>
         <p>Stackable washer &amp; dryer inside the unit plus community laundry onsite.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <div class="fc-icon">&#10052;&#65039;</div>
         <h3>Central A/C &amp; Heat</h3>
         <p>Full central air and forced-air heating. Comfortable year-round.</p>
@@ -315,53 +335,53 @@ section:nth-child(even){background:var(--white)}
   </div>
 </section>
 
-<!-- COMMUNITY + LOCATION (combined) -->
+<!-- COMMUNITY + LOCATION -->
 <section>
   <div class="container">
-    <div class="section-label">Community &amp; Location</div>
-    <div class="section-title">Mission Ridge &mdash; Mission Valley, San Diego</div>
-    <div class="section-sub">A quiet, peaceful gated community with mature trees and resort-caliber amenities. Perfect for students &mdash; SDSU, USD, and UCSD are all an easy commute.</div>
+    <div class="section-label reveal">Community &amp; Location</div>
+    <div class="section-title reveal">Mission Ridge &mdash; Mission Valley, San Diego</div>
+    <div class="section-sub reveal">A quiet, peaceful gated community with mature trees and resort-caliber amenities. Perfect for students &mdash; SDSU, USD, and UCSD are all an easy commute.</div>
 
     <div class="amenity-grid" style="margin-bottom:24px">
-      <div class="amenity-pill"><span class="ap-dot pool"></span>Resort-Style Pool</div>
-      <div class="amenity-pill"><span class="ap-dot pool"></span>Hot Tub / Spa</div>
-      <div class="amenity-pill"><span class="ap-dot pool"></span>Sauna</div>
-      <div class="amenity-pill"><span class="ap-dot gym"></span>Fitness Room</div>
-      <div class="amenity-pill"><span class="ap-dot area"></span>BBQ &amp; Picnic Area</div>
-      <div class="amenity-pill"><span class="ap-dot area"></span>Clubhouse</div>
-      <div class="amenity-pill"><span class="ap-dot unit"></span>In-Unit W/D</div>
-      <div class="amenity-pill"><span class="ap-dot unit"></span>Free Guest Parking</div>
-      <div class="amenity-pill"><span class="ap-dot unit"></span>Internet Included</div>
-      <div class="amenity-pill"><span class="ap-dot area"></span>Gated &amp; Secure</div>
-      <div class="amenity-pill"><span class="ap-dot area"></span>Quiet Community</div>
-      <div class="amenity-pill"><span class="ap-dot unit"></span>Cat-Friendly</div>
-      <div class="amenity-pill"><span class="ap-dot unit"></span>Gas Fireplace</div>
-      <div class="amenity-pill"><span class="ap-dot unit"></span>Private Patio</div>
+      <div class="amenity-pill reveal"><span class="ap-dot pool"></span>Resort-Style Pool</div>
+      <div class="amenity-pill reveal"><span class="ap-dot pool"></span>Hot Tub / Spa</div>
+      <div class="amenity-pill reveal"><span class="ap-dot pool"></span>Sauna</div>
+      <div class="amenity-pill reveal"><span class="ap-dot gym"></span>Fitness Room</div>
+      <div class="amenity-pill reveal"><span class="ap-dot area"></span>BBQ &amp; Picnic Area</div>
+      <div class="amenity-pill reveal"><span class="ap-dot area"></span>Clubhouse</div>
+      <div class="amenity-pill reveal"><span class="ap-dot unit"></span>In-Unit W/D</div>
+      <div class="amenity-pill reveal"><span class="ap-dot unit"></span>Free Guest Parking</div>
+      <div class="amenity-pill reveal"><span class="ap-dot unit"></span>Internet Included</div>
+      <div class="amenity-pill reveal"><span class="ap-dot area"></span>Gated &amp; Secure</div>
+      <div class="amenity-pill reveal"><span class="ap-dot area"></span>Quiet Community</div>
+      <div class="amenity-pill reveal"><span class="ap-dot unit"></span>Cat-Friendly</div>
+      <div class="amenity-pill reveal"><span class="ap-dot unit"></span>Gas Fireplace</div>
+      <div class="amenity-pill reveal"><span class="ap-dot unit"></span>Private Patio</div>
     </div>
 
-    <h3 style="font-size:13px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Nearby</h3>
+    <h3 class="reveal" style="font-size:13px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Nearby</h3>
     <ul class="loc-list">
-      <li><span class="loc-icon">&#127891;</span><span>SDSU</span><span class="loc-dist">10 min</span></li>
-      <li><span class="loc-icon">&#127891;</span><span>SDSU Mission Valley</span><span class="loc-dist">3 min</span></li>
-      <li><span class="loc-icon">&#127891;</span><span>USD</span><span class="loc-dist">10 min</span></li>
-      <li><span class="loc-icon">&#127891;</span><span>UCSD</span><span class="loc-dist">20 min</span></li>
-      <li><span class="loc-icon">&#127963;</span><span>Snapdragon Stadium</span><span class="loc-dist">2 min</span></li>
-      <li><span class="loc-icon">&#128717;</span><span>Fashion Valley Mall</span><span class="loc-dist">5 min</span></li>
-      <li><span class="loc-icon">&#128645;</span><span>Green Line Trolley</span><span class="loc-dist">5 min</span></li>
-      <li><span class="loc-icon">&#127754;</span><span>Mission &amp; Pacific Beach</span><span class="loc-dist">15 min</span></li>
-      <li><span class="loc-icon">&#127751;</span><span>Gaslamp Downtown</span><span class="loc-dist">10 min</span></li>
-      <li><span class="loc-icon">&#128739;</span><span>I-8 &amp; I-15</span><span class="loc-dist">1 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127891;</span><span>SDSU</span><span class="loc-dist">10 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127891;</span><span>SDSU Mission Valley</span><span class="loc-dist">3 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127891;</span><span>USD</span><span class="loc-dist">10 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127891;</span><span>UCSD</span><span class="loc-dist">20 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127963;</span><span>Snapdragon Stadium</span><span class="loc-dist">2 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#128717;</span><span>Fashion Valley Mall</span><span class="loc-dist">5 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#128645;</span><span>Green Line Trolley</span><span class="loc-dist">5 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127754;</span><span>Mission &amp; Pacific Beach</span><span class="loc-dist">15 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#127751;</span><span>Gaslamp Downtown</span><span class="loc-dist">10 min</span></li>
+      <li class="reveal"><span class="loc-icon">&#128739;</span><span>I-8 &amp; I-15</span><span class="loc-dist">1 min</span></li>
     </ul>
   </div>
 </section>
 
-<!-- LEASE + UNIT DETAILS (combined) -->
+<!-- LEASE + UNIT DETAILS -->
 <section style="background:var(--white)">
   <div class="container">
-    <div class="section-label">Details</div>
-    <div class="section-title">Lease, Unit &amp; Move-In Info</div>
+    <div class="section-label reveal">Details</div>
+    <div class="section-title reveal">Lease, Unit &amp; Move-In Info</div>
 
-    <div class="details-grid">
+    <div class="details-grid reveal">
       <div class="detail-group">
         <h3>Rent &amp; Lease</h3>
         <div class="detail-row"><span class="dl">Monthly Rent</span><span class="dv">$2,000</span></div>
@@ -381,7 +401,7 @@ section:nth-child(even){background:var(--white)}
       </div>
     </div>
 
-    <div class="details-grid" style="margin-top:20px">
+    <div class="details-grid reveal" style="margin-top:20px">
       <div class="detail-group">
         <h3>Unit &mdash; 2 Bed / 2 Bath &mdash; 1,167 sq ft</h3>
         <div class="detail-row"><span class="dl">Living Room</span><span class="dv">25' &times; 15'</span></div>
@@ -403,17 +423,17 @@ section:nth-child(even){background:var(--white)}
 <!-- ROOMMATE FIT -->
 <section>
   <div class="container">
-    <div class="section-label">Good Fit?</div>
-    <div class="section-title">About You &amp; Your Roommate</div>
-    <div class="section-sub">You'd be sharing with a friendly, laid-back woman in her late twenties who has a sweet cat. Quiet, clean, respectful. Ideal for a female student or professional ~25&ndash;35.</div>
+    <div class="section-label reveal">Good Fit?</div>
+    <div class="section-title reveal">About You &amp; Your Roommate</div>
+    <div class="section-sub reveal">You'd be sharing with a friendly, laid-back woman in her late twenties who has a sweet cat. Quiet, clean, respectful. Ideal for a female student or professional ~25&ndash;35.</div>
 
     <ul class="expect-list">
-      <li><span class="check">&#10003;</span>Female &mdash; student, grad student, or professional</li>
-      <li><span class="check">&#10003;</span>Clean, respectful, and communicative</li>
-      <li><span class="check">&#10003;</span>Cat-friendly (resident kitty!)</li>
-      <li><span class="check">&#10003;</span>Non-smoker</li>
-      <li><span class="check">&#10003;</span>Quiet lifestyle &mdash; not a party house</li>
-      <li><span class="check">&#10003;</span>Financially stable &bull; Background &amp; credit check</li>
+      <li class="reveal"><span class="check">&#10003;</span>Female &mdash; student, grad student, or professional</li>
+      <li class="reveal"><span class="check">&#10003;</span>Clean, respectful, and communicative</li>
+      <li class="reveal"><span class="check">&#10003;</span>Cat-friendly (resident kitty!)</li>
+      <li class="reveal"><span class="check">&#10003;</span>Non-smoker</li>
+      <li class="reveal"><span class="check">&#10003;</span>Quiet lifestyle &mdash; not a party house</li>
+      <li class="reveal"><span class="check">&#10003;</span>Financially stable &bull; Background &amp; credit check</li>
     </ul>
   </div>
 </section>
@@ -421,88 +441,68 @@ section:nth-child(even){background:var(--white)}
 <!-- NEIGHBORHOOD MAP -->
 <div class="map-section">
   <div class="container">
-    <div class="section-label">Neighborhood</div>
-    <div class="section-title">Where You'll Be</div>
-    <div class="map-container">
+    <div class="section-label reveal">Neighborhood</div>
+    <div class="section-title reveal">Where You'll Be</div>
+    <div class="map-container reveal">
       <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-        <!-- Background -->
         <rect width="700" height="500" fill="#eef2ee" rx="8"/>
-
-        <!-- San Diego River (subtle) -->
+        <!-- San Diego River -->
         <path d="M0,175 Q150,160 300,170 Q450,180 550,165 Q620,158 700,162" stroke="#bde0f0" stroke-width="20" fill="none" opacity="0.5"/>
         <text x="580" y="155" font-size="9" fill="#7cb9d4" font-weight="600" font-style="italic" opacity="0.7">San Diego River</text>
-
-        <!-- I-15 (vertical freeway) -->
+        <!-- I-15 -->
         <rect x="105" y="0" width="28" height="500" fill="#d4d8d4" rx="2" opacity="0.5"/>
         <line x1="119" y1="0" x2="119" y2="500" stroke="#fff" stroke-width="2" stroke-dasharray="12,8" opacity="0.6"/>
         <rect x="107" y="15" width="24" height="18" fill="#2563EB" rx="4"/>
         <text x="119" y="28" font-size="11" fill="white" font-weight="800" text-anchor="middle">I-15</text>
-
-        <!-- I-8 (horizontal freeway) -->
-        <path d="M0,210 Q200,195 400,205 Q550,215 700,208" stroke="none" fill="#d4d8d4" opacity="0.5"/>
-        <path d="M0,197 Q200,182 400,192 Q550,202 700,195" fill="#d4d8d4" opacity="0.5"/>
+        <!-- I-8 -->
         <rect x="0" y="192" width="700" height="23" fill="#d4d8d4" rx="0" opacity="0.35"/>
         <path d="M0,204 Q200,189 400,199 Q550,209 700,202" stroke="#fff" stroke-width="1.5" stroke-dasharray="10,7" fill="none" opacity="0.5"/>
         <rect x="615" y="192" width="22" height="18" fill="#2563EB" rx="4"/>
         <text x="626" y="205" font-size="11" fill="white" font-weight="800" text-anchor="middle">I-8</text>
-
         <!-- Friars Rd -->
         <path d="M0,135 Q250,120 500,128 Q600,132 700,126" stroke="#c8ccc8" stroke-width="7" fill="none"/>
         <rect x="480" y="108" width="70" height="16" fill="#eef2ee" rx="3"/>
         <text x="515" y="120" font-size="11" fill="#7a8078" font-weight="700" text-anchor="middle">Friars Rd</text>
-
         <!-- Mission Gorge Rd -->
         <path d="M180,0 Q200,80 230,210 Q250,300 260,400 Q265,450 270,500" stroke="#c8ccc8" stroke-width="6" fill="none"/>
         <text x="200" y="40" font-size="10" fill="#7a8078" font-weight="600" transform="rotate(8,200,40)">Mission Gorge Rd</text>
-
         <!-- Rancho Mission Rd -->
         <path d="M400,220 Q430,320 470,420 Q490,460 510,500" stroke="#c8ccc8" stroke-width="6" fill="none"/>
         <text x="460" y="380" font-size="10" fill="#7a8078" font-weight="600" transform="rotate(68,460,380)">Rancho Mission Rd</text>
-
         <!-- Caminito Cuervo -->
         <path d="M210,240 Q280,265 350,290 Q390,310 380,360" stroke="#a8b0a8" stroke-width="5" fill="none"/>
         <rect x="195" y="228" width="110" height="15" fill="#eef2ee" rx="3"/>
         <text x="250" y="239" font-size="10" fill="#5a6358" font-weight="700" text-anchor="middle">Caminito Cuervo</text>
-
         <!-- Camino del Rio -->
         <path d="M0,265 Q200,250 400,258 Q550,265 700,260" stroke="#c8ccc8" stroke-width="6" fill="none"/>
         <text x="570" y="254" font-size="10" fill="#7a8078" font-weight="600">Camino del Rio</text>
-
-        <!-- ===== MISSION RIDGE (main pin) ===== -->
+        <!-- MISSION RIDGE -->
         <rect x="260" y="270" width="120" height="70" fill="#0d9488" opacity="0.12" rx="10"/>
-        <rect x="260" y="270" width="120" height="70" fill="none" stroke="#0d9488" stroke-width="2.5" rx="10" stroke-dasharray="none"/>
-        <!-- Pin drop -->
-        <g transform="translate(320,290)">
+        <rect x="260" y="270" width="120" height="70" fill="none" stroke="#0d9488" stroke-width="2.5" rx="10"/>
+        <g class="map-pin" transform="translate(320,290)">
           <ellipse cx="0" cy="22" rx="10" ry="4" fill="rgba(0,0,0,0.12)"/>
           <path d="M0,-18 C-12,-18 -18,-8 -18,2 C-18,14 0,26 0,26 C0,26 18,14 18,2 C18,-8 12,-18 0,-18 Z" fill="#0d9488"/>
           <circle cx="0" cy="0" r="6" fill="white"/>
         </g>
         <text x="320" y="332" font-size="14" fill="#0d9488" font-weight="900" text-anchor="middle" letter-spacing="0.5">MISSION RIDGE</text>
         <text x="320" y="346" font-size="9" fill="#5a6358" font-weight="600" text-anchor="middle">Caminito Cuervo, San Diego 92108</text>
-
-        <!-- Pool icon -->
+        <!-- Pool -->
         <rect x="388" y="278" width="40" height="22" fill="#0ea5e9" opacity="0.15" rx="11"/>
         <text x="408" y="293" font-size="10" fill="#0ea5e9" font-weight="800" text-anchor="middle">Pool</text>
-
-        <!-- ===== LANDMARKS ===== -->
-
         <!-- SDSU -->
         <rect x="420" y="62" width="100" height="36" fill="#2563EB" opacity="0.08" rx="8"/>
         <rect x="420" y="62" width="100" height="36" fill="none" stroke="#2563EB" stroke-width="1.5" rx="8" opacity="0.4"/>
         <text x="470" y="78" font-size="9" fill="#2563EB" font-weight="600" text-anchor="middle">&#127891;</text>
         <text x="470" y="92" font-size="12" fill="#2563EB" font-weight="800" text-anchor="middle">SDSU</text>
-        <!-- distance line -->
         <line x1="350" y1="290" x2="440" y2="95" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.35"/>
         <rect x="385" y="180" width="42" height="16" fill="#eef2ee" rx="3"/>
         <text x="406" y="191" font-size="10" fill="#2563EB" font-weight="700" text-anchor="middle">10 min</text>
-
-        <!-- SDSU Mission Valley Campus -->
+        <!-- SDSU Mission Valley -->
         <rect x="330" y="380" width="130" height="30" fill="#2563EB" opacity="0.08" rx="8"/>
         <rect x="330" y="380" width="130" height="30" fill="none" stroke="#2563EB" stroke-width="1.2" rx="8" opacity="0.3"/>
         <text x="395" y="400" font-size="10" fill="#2563EB" font-weight="700" text-anchor="middle">SDSU Mission Valley</text>
         <line x1="340" y1="340" x2="370" y2="382" stroke="#2563EB" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
         <text x="340" y="370" font-size="9" fill="#2563EB" font-weight="700">3 min</text>
-
         <!-- USD -->
         <rect x="530" y="260" width="70" height="36" fill="#7c3aed" opacity="0.08" rx="8"/>
         <rect x="530" y="260" width="70" height="36" fill="none" stroke="#7c3aed" stroke-width="1.5" rx="8" opacity="0.4"/>
@@ -511,51 +511,42 @@ section:nth-child(even){background:var(--white)}
         <line x1="380" y1="300" x2="530" y2="280" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
         <rect x="445" y="280" width="42" height="16" fill="#eef2ee" rx="3"/>
         <text x="466" y="291" font-size="10" fill="#7c3aed" font-weight="700" text-anchor="middle">10 min</text>
-
-        <!-- Fashion Valley Mall -->
+        <!-- Fashion Valley -->
         <rect x="30" y="80" width="60" height="40" fill="#9333ea" opacity="0.08" rx="8"/>
         <rect x="30" y="80" width="60" height="40" fill="none" stroke="#9333ea" stroke-width="1.2" rx="8" opacity="0.3"/>
         <text x="60" y="96" font-size="12" fill="#9333ea" font-weight="600" text-anchor="middle">&#128717;</text>
         <text x="60" y="112" font-size="8" fill="#9333ea" font-weight="700" text-anchor="middle">Fashion Valley</text>
         <line x1="90" y1="105" x2="265" y2="280" stroke="#9333ea" stroke-width="1" stroke-dasharray="4,4" opacity="0.25"/>
         <text x="160" y="185" font-size="9" fill="#9333ea" font-weight="700">5 min</text>
-
-        <!-- Snapdragon Stadium -->
+        <!-- Snapdragon -->
         <rect x="240" y="405" width="75" height="40" fill="#f59e0b" opacity="0.1" rx="8"/>
         <rect x="240" y="405" width="75" height="40" fill="none" stroke="#f59e0b" stroke-width="1.2" rx="8" opacity="0.35"/>
         <text x="277" y="421" font-size="12" fill="#d97706" font-weight="600" text-anchor="middle">&#127963;</text>
         <text x="277" y="437" font-size="8" fill="#d97706" font-weight="700" text-anchor="middle">Snapdragon</text>
         <line x1="300" y1="340" x2="280" y2="405" stroke="#d97706" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
         <text x="275" y="378" font-size="9" fill="#d97706" font-weight="700">2 min</text>
-
-        <!-- Green Line Trolley -->
+        <!-- Trolley -->
         <rect x="148" y="430" width="75" height="30" fill="#10b981" opacity="0.1" rx="8"/>
         <rect x="148" y="430" width="75" height="30" fill="none" stroke="#10b981" stroke-width="1.2" rx="8" opacity="0.3"/>
         <text x="185" y="450" font-size="9" fill="#10b981" font-weight="700" text-anchor="middle">&#128645; Trolley</text>
-
-        <!-- Beaches arrow (right edge) -->
+        <!-- Beaches -->
         <rect x="615" y="100" width="70" height="36" fill="#06b6d4" opacity="0.08" rx="8"/>
         <text x="650" y="116" font-size="12" fill="#06b6d4" font-weight="600" text-anchor="middle">&#127754;</text>
         <text x="650" y="130" font-size="8" fill="#06b6d4" font-weight="700" text-anchor="middle">Beaches 15m</text>
-        <path d="M685,118 L700,118" stroke="#06b6d4" stroke-width="1.5" opacity="0.5" marker-end="none"/>
-
-        <!-- Downtown arrow -->
+        <!-- Downtown -->
         <rect x="560" y="420" width="80" height="36" fill="#e11d48" opacity="0.07" rx="8"/>
         <text x="600" y="436" font-size="11" fill="#e11d48" font-weight="600" text-anchor="middle">&#127751;</text>
         <text x="600" y="450" font-size="8" fill="#e11d48" font-weight="700" text-anchor="middle">Downtown 10m</text>
-
-        <!-- 24 Hour Fitness -->
+        <!-- 24Hr Fitness -->
         <rect x="170" y="360" width="55" height="26" fill="#f97316" opacity="0.08" rx="6"/>
         <text x="197" y="378" font-size="8" fill="#f97316" font-weight="700" text-anchor="middle">&#128664; 24Hr Fit</text>
-
         <!-- Compass -->
         <g transform="translate(650,40)">
           <circle cx="0" cy="0" r="18" fill="white" stroke="#d1d5db" stroke-width="1"/>
           <text x="0" y="-5" font-size="10" fill="#374151" font-weight="800" text-anchor="middle">N</text>
           <path d="M0,-2 L-4,8 L0,5 L4,8 Z" fill="#374151"/>
         </g>
-
-        <!-- Scale bar -->
+        <!-- Scale -->
         <line x1="30" y1="480" x2="110" y2="480" stroke="#9ca3af" stroke-width="1.5"/>
         <line x1="30" y1="476" x2="30" y2="484" stroke="#9ca3af" stroke-width="1.5"/>
         <line x1="110" y1="476" x2="110" y2="484" stroke="#9ca3af" stroke-width="1.5"/>
@@ -568,10 +559,10 @@ section:nth-child(even){background:var(--white)}
 <!-- CTA -->
 <div class="cta-section">
   <div class="container">
-    <h2>Ready to See It?</h2>
-    <p>Reach out to schedule a tour. Serious inquiries only.</p>
-    <a href="sms:&body=Hi!%20I'm%20interested%20in%20the%20room%20for%20rent%20at%20Mission%20Ridge%20in%20Mission%20Valley.%20Is%20it%20still%20available?" class="cta-btn">Send a Message</a>
-    <div class="cta-contact">Mission Ridge &bull; Caminito Cuervo &bull; Mission Valley, San Diego 92108</div>
+    <h2 class="reveal">Ready to See It?</h2>
+    <p class="reveal">Reach out to schedule a tour. Serious inquiries only.</p>
+    <a href="sms:&body=Hi!%20I'm%20interested%20in%20the%20room%20for%20rent%20at%20Mission%20Ridge%20in%20Mission%20Valley.%20Is%20it%20still%20available?" class="cta-btn reveal">Send a Message</a>
+    <div class="cta-contact reveal">Mission Ridge &bull; Caminito Cuervo &bull; Mission Valley, San Diego 92108</div>
   </div>
 </div>
 
@@ -581,35 +572,216 @@ section:nth-child(even){background:var(--white)}
 </div>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-bg"></div>
+  <div class="lightbox-close">&times;</div>
   <img id="lightbox-img" src="" alt="">
   <div class="lightbox-caption" id="lightbox-caption"></div>
 </div>
 
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 <script>
 (function(){
-  var lb=document.getElementById('lightbox');
-  var lbImg=document.getElementById('lightbox-img');
-  var lbCap=document.getElementById('lightbox-caption');
+  gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll('.photo-grid .photo-card img, .hero-img').forEach(function(img){
-    img.addEventListener('click',function(e){
-      e.stopPropagation();
-      lbImg.src=this.src;
-      var card=this.closest('.photo-card');
-      var label=card?card.querySelector('.photo-label'):null;
-      lbCap.textContent=label?label.textContent:(this.alt||'');
-      lb.classList.add('active');
-      document.body.style.overflow='hidden';
+  // ---- Respect reduced motion ----
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    gsap.globalTimeline.timeScale(100); // instant
+    document.querySelectorAll('.reveal').forEach(function(el){ el.style.visibility = 'visible'; });
+    return initLightbox(); // skip animations, just init lightbox
+  }
+
+  // ---- HERO ENTRANCE ----
+  var heroTl = gsap.timeline({ defaults: { ease: 'power3.out' }});
+  heroTl
+    .fromTo('.hero-badge', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.2)
+    .fromTo('.hero-content h1', { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.35)
+    .fromTo('.hero-sub', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.55)
+    .fromTo('.hero-price', { autoAlpha: 0, x: 30, scale: 0.95 }, { autoAlpha: 1, x: 0, scale: 1, duration: 0.7 }, 0.3);
+
+  // ---- HERO PARALLAX ----
+  gsap.to('.hero-img', {
+    y: '15%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  // ---- HIGHLIGHTS BAR ----
+  gsap.fromTo('.hl-item', { autoAlpha: 0, y: 15 }, {
+    autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
+    scrollTrigger: { trigger: '.highlights', start: 'top 90%', once: true }
+  });
+
+  // ---- PHOTO CARDS (batch stagger) ----
+  ScrollTrigger.batch('.photo-grid .photo-card.reveal', {
+    onEnter: function(els) {
+      gsap.fromTo(els, { autoAlpha: 0, y: 25, scale: 0.96 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.07, ease: 'power2.out' });
+    },
+    start: 'top 88%',
+    once: true
+  });
+
+  // ---- SECTION HEADERS ----
+  document.querySelectorAll('.section-label.reveal, .section-title.reveal, .section-sub.reveal').forEach(function(el) {
+    gsap.fromTo(el, { autoAlpha: 0, y: 18 }, {
+      autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
     });
   });
 
-  window.closeLightbox=function(){
-    lb.classList.remove('active');
-    document.body.style.overflow='';
-  };
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox()});
+  // ---- POOL CALLOUT ----
+  gsap.fromTo('.pool-callout', { autoAlpha: 0, y: 25, scale: 0.97 }, {
+    autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: 'power2.out',
+    scrollTrigger: { trigger: '.pool-callout', start: 'top 85%', once: true }
+  });
+
+  // ---- FEATURE CARDS (batch) ----
+  ScrollTrigger.batch('.feature-card.reveal', {
+    onEnter: function(els) {
+      gsap.fromTo(els, { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'back.out(1.2)' });
+    },
+    start: 'top 88%',
+    once: true
+  });
+
+  // ---- AMENITY PILLS (batch) ----
+  ScrollTrigger.batch('.amenity-pill.reveal', {
+    onEnter: function(els) {
+      gsap.fromTo(els, { autoAlpha: 0, scale: 0.9 },
+        { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.03, ease: 'back.out(1.5)' });
+    },
+    start: 'top 90%',
+    once: true,
+    batchMax: 7
+  });
+
+  // ---- LOCATION LIST (stagger from left) ----
+  ScrollTrigger.batch('.loc-list li.reveal', {
+    onEnter: function(els) {
+      gsap.fromTo(els, { autoAlpha: 0, x: -15 },
+        { autoAlpha: 1, x: 0, duration: 0.4, stagger: 0.04, ease: 'power2.out' });
+    },
+    start: 'top 88%',
+    once: true,
+    batchMax: 5
+  });
+
+  // ---- DETAILS GRIDS ----
+  document.querySelectorAll('.details-grid.reveal').forEach(function(el) {
+    gsap.fromTo(el, { autoAlpha: 0, y: 20 }, {
+      autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+    });
+  });
+
+  // ---- EXPECT LIST (stagger with pop) ----
+  ScrollTrigger.batch('.expect-list li.reveal', {
+    onEnter: function(els) {
+      gsap.fromTo(els, { autoAlpha: 0, x: -10 },
+        { autoAlpha: 1, x: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' });
+    },
+    start: 'top 88%',
+    once: true
+  });
+
+  // ---- NEARBY HEADING ----
+  document.querySelectorAll('h3.reveal').forEach(function(el) {
+    gsap.fromTo(el, { autoAlpha: 0, y: 10 }, {
+      autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  // ---- MAP ----
+  gsap.fromTo('.map-container.reveal', { autoAlpha: 0, y: 30 }, {
+    autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: '.map-container', start: 'top 85%', once: true }
+  });
+
+  // ---- MAP PIN BOUNCE (subtle) ----
+  gsap.fromTo('.map-pin', { y: -8 }, {
+    y: 0, duration: 0.6, ease: 'bounce.out', delay: 0.3,
+    scrollTrigger: { trigger: '.map-container', start: 'top 80%', once: true }
+  });
+
+  // ---- CTA ----
+  var ctaTl = gsap.timeline({
+    scrollTrigger: { trigger: '.cta-section', start: 'top 85%', once: true }
+  });
+  ctaTl
+    .fromTo('.cta-section h2', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+    .fromTo('.cta-section p', { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+    .fromTo('.cta-btn', { autoAlpha: 0, y: 15, scale: 0.95 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: 'back.out(1.4)' }, '-=0.2')
+    .fromTo('.cta-contact', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, '-=0.2');
+
+  // ---- CTA PULSE (gentle) ----
+  gsap.to('.cta-btn', {
+    boxShadow: '0 0 0 8px rgba(13,148,136,0.15)',
+    duration: 1.2,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut',
+    delay: 2
+  });
+
+  // ---- LIGHTBOX ----
+  initLightbox();
+
+  function initLightbox() {
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    var lbCap = document.getElementById('lightbox-caption');
+    var lbBg = lb.querySelector('.lightbox-bg');
+    var lbClose = lb.querySelector('.lightbox-close');
+
+    function openLightbox(src, caption) {
+      lbImg.src = src;
+      lbCap.textContent = caption;
+      gsap.set(lb, { visibility: 'visible' });
+      var tl = gsap.timeline();
+      tl.fromTo(lbBg, { opacity: 0 }, { opacity: 1, duration: 0.25 })
+        .fromTo(lbImg, { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' }, '-=0.1')
+        .fromTo(lbCap, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 }, '-=0.15')
+        .fromTo(lbClose, { opacity: 0 }, { opacity: 1, duration: 0.2 }, '-=0.2');
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      var tl = gsap.timeline({ onComplete: function() {
+        lb.classList.remove('active');
+        gsap.set(lb, { visibility: 'hidden' });
+        document.body.style.overflow = '';
+      }});
+      tl.to([lbImg, lbCap, lbClose], { opacity: 0, duration: 0.2 })
+        .to(lbBg, { opacity: 0, duration: 0.2 }, '-=0.1');
+    }
+
+    document.querySelectorAll('.photo-grid .photo-card img, .hero-img').forEach(function(img) {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var card = this.closest('.photo-card');
+        var label = card ? card.querySelector('.photo-label') : null;
+        openLightbox(this.src, label ? label.textContent : (this.alt || ''));
+      });
+    });
+
+    lbBg.addEventListener('click', closeLightbox);
+    lbClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+  }
+
 })();
 </script>
 
