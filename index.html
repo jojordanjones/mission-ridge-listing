@@ -58,13 +58,13 @@ section:nth-child(even){background:var(--white)}
 .photo-grid .photo-card:hover .photo-label{transform:translateY(0)}
 
 /* ===== LIGHTBOX ===== */
-.lightbox{position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px;cursor:zoom-out;display:flex;visibility:hidden;opacity:0}
+.lightbox{position:fixed;inset:0;z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:16px;cursor:zoom-out;display:flex;visibility:hidden;opacity:0}
 .lightbox.active{visibility:visible;opacity:1}
 .lightbox-bg{position:absolute;inset:0;background:rgba(0,0,0,0.93)}
-.lightbox img{max-width:96vw;max-height:88vh;object-fit:contain;border-radius:6px;position:relative;z-index:1}
+.lightbox img{max-width:96vw;max-height:80vh;object-fit:contain;border-radius:6px;position:relative;z-index:1}
 .lightbox-close{position:absolute;top:12px;right:16px;color:white;font-size:32px;font-weight:300;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,0.1);z-index:10000;line-height:1;transition:background 0.2s}
 .lightbox-close:hover{background:rgba(255,255,255,0.25)}
-.lightbox-caption{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;text-align:center;max-width:85vw;z-index:1}
+.lightbox-caption{position:relative;z-index:1;color:var(--white);font-size:18px;font-weight:700;text-align:center;max-width:90vw;background:var(--navy);padding:10px 28px;border-radius:8px;letter-spacing:0.2px;margin-top:14px;flex-shrink:0}
 
 /* ===== POOL CALLOUT ===== */
 .pool-callout{background:linear-gradient(135deg,#0d9488 0%,#0ea5e9 100%);border-radius:var(--r);padding:28px 24px;color:var(--white);text-align:center;margin:24px 0;position:relative;overflow:hidden}
@@ -102,13 +102,14 @@ section:nth-child(even){background:var(--white)}
 .loc-list li:hover .loc-dist{background:var(--teal);color:var(--white)}
 
 /* ===== DETAILS TABLE ===== */
-.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;overflow:hidden}
+.detail-group{overflow:hidden;min-width:0}
 .detail-group h3{font-size:13px;font-weight:700;color:var(--black);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--teal)}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px;transition:background 0.15s}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px;transition:background 0.15s;gap:8px;overflow:hidden}
 .detail-row:hover{background:var(--g50)}
 .detail-row:last-child{border-bottom:none}
-.detail-row .dl{color:var(--g500)}
-.detail-row .dv{font-weight:600;color:var(--g800)}
+.detail-row .dl{color:var(--g500);flex-shrink:0}
+.detail-row .dv{font-weight:600;color:var(--g800);text-align:right;min-width:0;overflow:hidden;text-overflow:ellipsis}
 
 /* ===== ROOMMATE EXPECTATIONS ===== */
 .expect-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px}
@@ -282,6 +283,10 @@ section:nth-child(even){background:var(--white)}
         <img src="listing_images/appraisal_p1_img44.jpeg" alt="Building front with landscaping">
         <div class="photo-label">Complex Entrance</div>
       </div>
+      <div class="photo-card reveal">
+        <img src="listing_images/cat.jpeg" alt="Friendly resident cat lounging on the couch" style="object-position:center 30%">
+        <div class="photo-label">Your Future Roommate's Cat</div>
+      </div>
     </div>
   </div>
 </section>
@@ -447,110 +452,115 @@ section:nth-child(even){background:var(--white)}
       <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
         <rect width="700" height="500" fill="#eef2ee" rx="8"/>
         <!-- San Diego River -->
-        <path d="M0,175 Q150,160 300,170 Q450,180 550,165 Q620,158 700,162" stroke="#bde0f0" stroke-width="20" fill="none" opacity="0.5"/>
-        <text x="580" y="155" font-size="9" fill="#7cb9d4" font-weight="600" font-style="italic" opacity="0.7">San Diego River</text>
+        <path d="M0,175 Q150,160 300,170 Q450,180 550,165 Q620,158 700,162" stroke="#bde0f0" stroke-width="22" fill="none" opacity="0.5"/>
+        <text x="540" y="150" font-size="14" fill="#5da8c4" font-weight="700" font-style="italic" opacity="0.7">San Diego River</text>
         <!-- I-15 -->
-        <rect x="105" y="0" width="28" height="500" fill="#d4d8d4" rx="2" opacity="0.5"/>
-        <line x1="119" y1="0" x2="119" y2="500" stroke="#fff" stroke-width="2" stroke-dasharray="12,8" opacity="0.6"/>
-        <rect x="107" y="15" width="24" height="18" fill="#2563EB" rx="4"/>
-        <text x="119" y="28" font-size="11" fill="white" font-weight="800" text-anchor="middle">I-15</text>
+        <rect x="100" y="0" width="36" height="500" fill="#c8ccc8" rx="2" opacity="0.45"/>
+        <line x1="118" y1="0" x2="118" y2="500" stroke="#fff" stroke-width="2.5" stroke-dasharray="14,9" opacity="0.6"/>
+        <rect x="103" y="12" width="30" height="22" fill="#2563EB" rx="5"/>
+        <text x="118" y="28" font-size="14" fill="white" font-weight="800" text-anchor="middle">I-15</text>
         <!-- I-8 -->
-        <rect x="0" y="192" width="700" height="23" fill="#d4d8d4" rx="0" opacity="0.35"/>
-        <path d="M0,204 Q200,189 400,199 Q550,209 700,202" stroke="#fff" stroke-width="1.5" stroke-dasharray="10,7" fill="none" opacity="0.5"/>
-        <rect x="615" y="192" width="22" height="18" fill="#2563EB" rx="4"/>
-        <text x="626" y="205" font-size="11" fill="white" font-weight="800" text-anchor="middle">I-8</text>
+        <rect x="0" y="190" width="700" height="28" fill="#c8ccc8" rx="0" opacity="0.35"/>
+        <path d="M0,204 Q200,189 400,199 Q550,209 700,202" stroke="#fff" stroke-width="2" stroke-dasharray="12,8" fill="none" opacity="0.5"/>
+        <rect x="608" y="191" width="28" height="22" fill="#2563EB" rx="5"/>
+        <text x="622" y="207" font-size="14" fill="white" font-weight="800" text-anchor="middle">I-8</text>
         <!-- Friars Rd -->
-        <path d="M0,135 Q250,120 500,128 Q600,132 700,126" stroke="#c8ccc8" stroke-width="7" fill="none"/>
-        <rect x="480" y="108" width="70" height="16" fill="#eef2ee" rx="3"/>
-        <text x="515" y="120" font-size="11" fill="#7a8078" font-weight="700" text-anchor="middle">Friars Rd</text>
+        <path d="M0,135 Q250,120 500,128 Q600,132 700,126" stroke="#b8bcb8" stroke-width="8" fill="none"/>
+        <rect x="460" y="103" width="110" height="22" fill="#eef2ee" rx="4"/>
+        <text x="515" y="119" font-size="16" fill="#5a6358" font-weight="800" text-anchor="middle">Friars Rd</text>
         <!-- Mission Gorge Rd -->
-        <path d="M180,0 Q200,80 230,210 Q250,300 260,400 Q265,450 270,500" stroke="#c8ccc8" stroke-width="6" fill="none"/>
-        <text x="200" y="40" font-size="10" fill="#7a8078" font-weight="600" transform="rotate(8,200,40)">Mission Gorge Rd</text>
+        <path d="M180,0 Q200,80 230,210 Q250,300 260,400 Q265,450 270,500" stroke="#b8bcb8" stroke-width="7" fill="none"/>
+        <rect x="155" y="28" width="130" height="20" fill="#eef2ee" rx="4"/>
+        <text x="220" y="43" font-size="15" fill="#5a6358" font-weight="700" text-anchor="middle">Mission Gorge Rd</text>
         <!-- Rancho Mission Rd -->
-        <path d="M400,220 Q430,320 470,420 Q490,460 510,500" stroke="#c8ccc8" stroke-width="6" fill="none"/>
-        <text x="460" y="380" font-size="10" fill="#7a8078" font-weight="600" transform="rotate(68,460,380)">Rancho Mission Rd</text>
+        <path d="M400,220 Q430,320 470,420 Q490,460 510,500" stroke="#b8bcb8" stroke-width="7" fill="none"/>
+        <text x="475" y="370" font-size="14" fill="#5a6358" font-weight="700" transform="rotate(68,475,370)">Rancho Mission Rd</text>
         <!-- Caminito Cuervo -->
-        <path d="M210,240 Q280,265 350,290 Q390,310 380,360" stroke="#a8b0a8" stroke-width="5" fill="none"/>
-        <rect x="195" y="228" width="110" height="15" fill="#eef2ee" rx="3"/>
-        <text x="250" y="239" font-size="10" fill="#5a6358" font-weight="700" text-anchor="middle">Caminito Cuervo</text>
+        <path d="M210,240 Q280,265 350,290 Q390,310 380,360" stroke="#8a928a" stroke-width="6" fill="none"/>
+        <rect x="180" y="222" width="140" height="20" fill="#eef2ee" rx="4"/>
+        <text x="250" y="237" font-size="15" fill="#3a4238" font-weight="800" text-anchor="middle">Caminito Cuervo</text>
         <!-- Camino del Rio -->
-        <path d="M0,265 Q200,250 400,258 Q550,265 700,260" stroke="#c8ccc8" stroke-width="6" fill="none"/>
-        <text x="570" y="254" font-size="10" fill="#7a8078" font-weight="600">Camino del Rio</text>
+        <path d="M0,265 Q200,250 400,258 Q550,265 700,260" stroke="#b8bcb8" stroke-width="7" fill="none"/>
+        <rect x="520" y="240" width="130" height="20" fill="#eef2ee" rx="4"/>
+        <text x="585" y="255" font-size="15" fill="#5a6358" font-weight="700" text-anchor="middle">Camino del Rio</text>
         <!-- MISSION RIDGE -->
-        <rect x="260" y="270" width="120" height="70" fill="#0d9488" opacity="0.12" rx="10"/>
-        <rect x="260" y="270" width="120" height="70" fill="none" stroke="#0d9488" stroke-width="2.5" rx="10"/>
-        <g class="map-pin" transform="translate(320,290)">
-          <ellipse cx="0" cy="22" rx="10" ry="4" fill="rgba(0,0,0,0.12)"/>
-          <path d="M0,-18 C-12,-18 -18,-8 -18,2 C-18,14 0,26 0,26 C0,26 18,14 18,2 C18,-8 12,-18 0,-18 Z" fill="#0d9488"/>
-          <circle cx="0" cy="0" r="6" fill="white"/>
+        <rect x="255" y="265" width="130" height="78" fill="#0d9488" opacity="0.12" rx="10"/>
+        <rect x="255" y="265" width="130" height="78" fill="none" stroke="#0d9488" stroke-width="3" rx="10"/>
+        <g class="map-pin" transform="translate(320,287)">
+          <ellipse cx="0" cy="24" rx="12" ry="5" fill="rgba(0,0,0,0.12)"/>
+          <path d="M0,-20 C-14,-20 -20,-9 -20,2 C-20,16 0,28 0,28 C0,28 20,16 20,2 C20,-9 14,-20 0,-20 Z" fill="#0d9488"/>
+          <circle cx="0" cy="0" r="7" fill="white"/>
         </g>
-        <text x="320" y="332" font-size="14" fill="#0d9488" font-weight="900" text-anchor="middle" letter-spacing="0.5">MISSION RIDGE</text>
-        <text x="320" y="346" font-size="9" fill="#5a6358" font-weight="600" text-anchor="middle">Caminito Cuervo, San Diego 92108</text>
+        <text x="320" y="333" font-size="16" fill="#0d9488" font-weight="900" text-anchor="middle" letter-spacing="0.8">MISSION RIDGE</text>
+        <text x="320" y="348" font-size="11" fill="#4a5248" font-weight="600" text-anchor="middle">Caminito Cuervo, San Diego 92108</text>
         <!-- Pool -->
-        <rect x="388" y="278" width="40" height="22" fill="#0ea5e9" opacity="0.15" rx="11"/>
-        <text x="408" y="293" font-size="10" fill="#0ea5e9" font-weight="800" text-anchor="middle">Pool</text>
+        <rect x="393" y="275" width="48" height="26" fill="#0ea5e9" opacity="0.18" rx="13"/>
+        <text x="417" y="293" font-size="13" fill="#0ea5e9" font-weight="800" text-anchor="middle">Pool</text>
         <!-- SDSU -->
-        <rect x="420" y="62" width="100" height="36" fill="#2563EB" opacity="0.08" rx="8"/>
-        <rect x="420" y="62" width="100" height="36" fill="none" stroke="#2563EB" stroke-width="1.5" rx="8" opacity="0.4"/>
-        <text x="470" y="78" font-size="9" fill="#2563EB" font-weight="600" text-anchor="middle">&#127891;</text>
-        <text x="470" y="92" font-size="12" fill="#2563EB" font-weight="800" text-anchor="middle">SDSU</text>
-        <line x1="350" y1="290" x2="440" y2="95" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.35"/>
-        <rect x="385" y="180" width="42" height="16" fill="#eef2ee" rx="3"/>
-        <text x="406" y="191" font-size="10" fill="#2563EB" font-weight="700" text-anchor="middle">10 min</text>
+        <rect x="410" y="55" width="120" height="42" fill="#2563EB" opacity="0.08" rx="8"/>
+        <rect x="410" y="55" width="120" height="42" fill="none" stroke="#2563EB" stroke-width="1.5" rx="8" opacity="0.4"/>
+        <text x="470" y="74" font-size="12" fill="#2563EB" font-weight="600" text-anchor="middle">&#127891;</text>
+        <text x="470" y="90" font-size="16" fill="#2563EB" font-weight="800" text-anchor="middle">SDSU</text>
+        <line x1="350" y1="287" x2="430" y2="94" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.35"/>
+        <rect x="378" y="176" width="56" height="20" fill="#eef2ee" rx="4"/>
+        <text x="406" y="191" font-size="14" fill="#2563EB" font-weight="700" text-anchor="middle">10 min</text>
         <!-- SDSU Mission Valley -->
-        <rect x="330" y="380" width="130" height="30" fill="#2563EB" opacity="0.08" rx="8"/>
-        <rect x="330" y="380" width="130" height="30" fill="none" stroke="#2563EB" stroke-width="1.2" rx="8" opacity="0.3"/>
-        <text x="395" y="400" font-size="10" fill="#2563EB" font-weight="700" text-anchor="middle">SDSU Mission Valley</text>
-        <line x1="340" y1="340" x2="370" y2="382" stroke="#2563EB" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
-        <text x="340" y="370" font-size="9" fill="#2563EB" font-weight="700">3 min</text>
+        <rect x="320" y="376" width="152" height="34" fill="#2563EB" opacity="0.08" rx="8"/>
+        <rect x="320" y="376" width="152" height="34" fill="none" stroke="#2563EB" stroke-width="1.2" rx="8" opacity="0.3"/>
+        <text x="396" y="398" font-size="13" fill="#2563EB" font-weight="700" text-anchor="middle">SDSU Mission Valley</text>
+        <line x1="340" y1="343" x2="370" y2="378" stroke="#2563EB" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.3"/>
+        <rect x="320" y="358" width="42" height="17" fill="#eef2ee" rx="4"/>
+        <text x="341" y="371" font-size="12" fill="#2563EB" font-weight="700" text-anchor="middle">3 min</text>
         <!-- USD -->
-        <rect x="530" y="260" width="70" height="36" fill="#7c3aed" opacity="0.08" rx="8"/>
-        <rect x="530" y="260" width="70" height="36" fill="none" stroke="#7c3aed" stroke-width="1.5" rx="8" opacity="0.4"/>
-        <text x="565" y="276" font-size="9" fill="#7c3aed" font-weight="600" text-anchor="middle">&#127891;</text>
-        <text x="565" y="290" font-size="12" fill="#7c3aed" font-weight="800" text-anchor="middle">USD</text>
-        <line x1="380" y1="300" x2="530" y2="280" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
-        <rect x="445" y="280" width="42" height="16" fill="#eef2ee" rx="3"/>
-        <text x="466" y="291" font-size="10" fill="#7c3aed" font-weight="700" text-anchor="middle">10 min</text>
+        <rect x="525" y="255" width="80" height="42" fill="#7c3aed" opacity="0.08" rx="8"/>
+        <rect x="525" y="255" width="80" height="42" fill="none" stroke="#7c3aed" stroke-width="1.5" rx="8" opacity="0.4"/>
+        <text x="565" y="274" font-size="12" fill="#7c3aed" font-weight="600" text-anchor="middle">&#127891;</text>
+        <text x="565" y="290" font-size="16" fill="#7c3aed" font-weight="800" text-anchor="middle">USD</text>
+        <line x1="385" y1="300" x2="525" y2="280" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.3"/>
+        <rect x="440" y="278" width="52" height="18" fill="#eef2ee" rx="4"/>
+        <text x="466" y="292" font-size="13" fill="#7c3aed" font-weight="700" text-anchor="middle">10 min</text>
         <!-- Fashion Valley -->
-        <rect x="30" y="80" width="60" height="40" fill="#9333ea" opacity="0.08" rx="8"/>
-        <rect x="30" y="80" width="60" height="40" fill="none" stroke="#9333ea" stroke-width="1.2" rx="8" opacity="0.3"/>
-        <text x="60" y="96" font-size="12" fill="#9333ea" font-weight="600" text-anchor="middle">&#128717;</text>
-        <text x="60" y="112" font-size="8" fill="#9333ea" font-weight="700" text-anchor="middle">Fashion Valley</text>
-        <line x1="90" y1="105" x2="265" y2="280" stroke="#9333ea" stroke-width="1" stroke-dasharray="4,4" opacity="0.25"/>
-        <text x="160" y="185" font-size="9" fill="#9333ea" font-weight="700">5 min</text>
+        <rect x="20" y="72" width="82" height="50" fill="#9333ea" opacity="0.08" rx="8"/>
+        <rect x="20" y="72" width="82" height="50" fill="none" stroke="#9333ea" stroke-width="1.2" rx="8" opacity="0.3"/>
+        <text x="61" y="92" font-size="14" fill="#9333ea" font-weight="600" text-anchor="middle">&#128717;</text>
+        <text x="61" y="112" font-size="11" fill="#9333ea" font-weight="800" text-anchor="middle">Fashion Valley</text>
+        <line x1="102" y1="100" x2="260" y2="280" stroke="#9333ea" stroke-width="1.2" stroke-dasharray="5,5" opacity="0.25"/>
+        <rect x="150" y="177" width="48" height="18" fill="#eef2ee" rx="4"/>
+        <text x="174" y="191" font-size="13" fill="#9333ea" font-weight="700" text-anchor="middle">5 min</text>
         <!-- Snapdragon -->
-        <rect x="240" y="405" width="75" height="40" fill="#f59e0b" opacity="0.1" rx="8"/>
-        <rect x="240" y="405" width="75" height="40" fill="none" stroke="#f59e0b" stroke-width="1.2" rx="8" opacity="0.35"/>
-        <text x="277" y="421" font-size="12" fill="#d97706" font-weight="600" text-anchor="middle">&#127963;</text>
-        <text x="277" y="437" font-size="8" fill="#d97706" font-weight="700" text-anchor="middle">Snapdragon</text>
-        <line x1="300" y1="340" x2="280" y2="405" stroke="#d97706" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
-        <text x="275" y="378" font-size="9" fill="#d97706" font-weight="700">2 min</text>
+        <rect x="228" y="400" width="98" height="46" fill="#f59e0b" opacity="0.1" rx="8"/>
+        <rect x="228" y="400" width="98" height="46" fill="none" stroke="#f59e0b" stroke-width="1.2" rx="8" opacity="0.35"/>
+        <text x="277" y="419" font-size="14" fill="#d97706" font-weight="600" text-anchor="middle">&#127963;</text>
+        <text x="277" y="438" font-size="11" fill="#d97706" font-weight="800" text-anchor="middle">Snapdragon</text>
+        <line x1="300" y1="343" x2="280" y2="400" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.3"/>
+        <rect x="262" y="372" width="42" height="17" fill="#eef2ee" rx="4"/>
+        <text x="283" y="385" font-size="12" fill="#d97706" font-weight="700" text-anchor="middle">2 min</text>
         <!-- Trolley -->
-        <rect x="148" y="430" width="75" height="30" fill="#10b981" opacity="0.1" rx="8"/>
-        <rect x="148" y="430" width="75" height="30" fill="none" stroke="#10b981" stroke-width="1.2" rx="8" opacity="0.3"/>
-        <text x="185" y="450" font-size="9" fill="#10b981" font-weight="700" text-anchor="middle">&#128645; Trolley</text>
+        <rect x="138" y="428" width="94" height="34" fill="#10b981" opacity="0.1" rx="8"/>
+        <rect x="138" y="428" width="94" height="34" fill="none" stroke="#10b981" stroke-width="1.2" rx="8" opacity="0.3"/>
+        <text x="185" y="451" font-size="13" fill="#10b981" font-weight="700" text-anchor="middle">&#128645; Trolley</text>
         <!-- Beaches -->
-        <rect x="615" y="100" width="70" height="36" fill="#06b6d4" opacity="0.08" rx="8"/>
-        <text x="650" y="116" font-size="12" fill="#06b6d4" font-weight="600" text-anchor="middle">&#127754;</text>
-        <text x="650" y="130" font-size="8" fill="#06b6d4" font-weight="700" text-anchor="middle">Beaches 15m</text>
+        <rect x="608" y="92" width="82" height="44" fill="#06b6d4" opacity="0.08" rx="8"/>
+        <text x="649" y="112" font-size="14" fill="#06b6d4" font-weight="600" text-anchor="middle">&#127754;</text>
+        <text x="649" y="129" font-size="11" fill="#06b6d4" font-weight="800" text-anchor="middle">Beaches 15m</text>
         <!-- Downtown -->
-        <rect x="560" y="420" width="80" height="36" fill="#e11d48" opacity="0.07" rx="8"/>
-        <text x="600" y="436" font-size="11" fill="#e11d48" font-weight="600" text-anchor="middle">&#127751;</text>
-        <text x="600" y="450" font-size="8" fill="#e11d48" font-weight="700" text-anchor="middle">Downtown 10m</text>
+        <rect x="550" y="415" width="100" height="44" fill="#e11d48" opacity="0.07" rx="8"/>
+        <text x="600" y="435" font-size="14" fill="#e11d48" font-weight="600" text-anchor="middle">&#127751;</text>
+        <text x="600" y="452" font-size="11" fill="#e11d48" font-weight="800" text-anchor="middle">Downtown 10m</text>
         <!-- 24Hr Fitness -->
-        <rect x="170" y="360" width="55" height="26" fill="#f97316" opacity="0.08" rx="6"/>
-        <text x="197" y="378" font-size="8" fill="#f97316" font-weight="700" text-anchor="middle">&#128664; 24Hr Fit</text>
+        <rect x="162" y="355" width="68" height="28" fill="#f97316" opacity="0.08" rx="6"/>
+        <text x="196" y="374" font-size="11" fill="#f97316" font-weight="700" text-anchor="middle">&#128664; 24Hr Fit</text>
         <!-- Compass -->
         <g transform="translate(650,40)">
-          <circle cx="0" cy="0" r="18" fill="white" stroke="#d1d5db" stroke-width="1"/>
-          <text x="0" y="-5" font-size="10" fill="#374151" font-weight="800" text-anchor="middle">N</text>
-          <path d="M0,-2 L-4,8 L0,5 L4,8 Z" fill="#374151"/>
+          <circle cx="0" cy="0" r="22" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+          <text x="0" y="-6" font-size="13" fill="#374151" font-weight="800" text-anchor="middle">N</text>
+          <path d="M0,-2 L-5,9 L0,6 L5,9 Z" fill="#374151"/>
         </g>
         <!-- Scale -->
-        <line x1="30" y1="480" x2="110" y2="480" stroke="#9ca3af" stroke-width="1.5"/>
-        <line x1="30" y1="476" x2="30" y2="484" stroke="#9ca3af" stroke-width="1.5"/>
-        <line x1="110" y1="476" x2="110" y2="484" stroke="#9ca3af" stroke-width="1.5"/>
-        <text x="70" y="474" font-size="8" fill="#9ca3af" font-weight="600" text-anchor="middle">~ 0.5 mi</text>
+        <line x1="30" y1="480" x2="120" y2="480" stroke="#9ca3af" stroke-width="2"/>
+        <line x1="30" y1="475" x2="30" y2="485" stroke="#9ca3af" stroke-width="2"/>
+        <line x1="120" y1="475" x2="120" y2="485" stroke="#9ca3af" stroke-width="2"/>
+        <text x="75" y="473" font-size="11" fill="#7a8078" font-weight="700" text-anchor="middle">~ 0.5 mi</text>
       </svg>
     </div>
   </div>
